@@ -3,8 +3,8 @@
  */
 package testdatabuilder;
 
-import com.domain.TipoDeVehiculo;
-import com.domain.Vehiculo;
+import dominio.TipoDeVehiculo;
+import dominio.Vehiculo;
 
 /**
  * @author luis.cortes
@@ -13,7 +13,7 @@ import com.domain.Vehiculo;
 public class VehiculoTestDataBuilder {
 	
 	private final TipoDeVehiculo TIPODEVEHICULO = TipoDeVehiculo.CARRO;
-	private final String PLACA = "LIV-77D";
+	private final String PLACA = "LIV-777";
 	private final int CILINDRAJE = 100;
 	
 	private TipoDeVehiculo tipoDeVehiculo;

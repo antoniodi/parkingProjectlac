@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.domain;
+package dominio;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;

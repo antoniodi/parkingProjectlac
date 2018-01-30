@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
 
-import com.domain.Parqueadero;
+import dominio.Parqueadero;
 
 @SpringBootApplication
 //Lo agrege

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.domain;
+package dominio;
 
 import org.omg.CORBA.PUBLIC_MEMBER;
 

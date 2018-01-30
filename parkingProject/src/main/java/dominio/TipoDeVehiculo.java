@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.domain;
+package dominio;
 
 /**
  * @author luis.cortes

@@ -11,9 +11,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-
-import com.domain.Parqueadero;
-
+import dominio.Parqueadero;
 import dominio.exception.ParkingException;
 
 /**
@@ -63,5 +61,7 @@ public class ParkingTest {
 			fail();
 		}
 	}
+	
+	
 
 }
