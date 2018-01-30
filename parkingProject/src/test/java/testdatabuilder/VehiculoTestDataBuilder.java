@@ -25,7 +25,7 @@ public class VehiculoTestDataBuilder {
 	 * @param placa
 	 * @param cilindraje
 	 */
-	public VehiculoTestDataBuilder(TipoDeVehiculo tipoDeVehiculo, String placa, int cilindraje) {
+	public VehiculoTestDataBuilder() {
 		this.tipoDeVehiculo = TIPODEVEHICULO;
 		this.placa = PLACA;
 		this.cilindraje = CILINDRAJE;
