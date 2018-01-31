@@ -5,13 +5,14 @@ package dominio.unitaria;
 
 import static org.junit.Assert.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import dominio.Parqueadero;
+import dominio.TipoDeVehiculo;
 import dominio.exception.ParkingException;
 
 /**
@@ -28,12 +29,12 @@ public class ParkingTest {
 		//Arrange
 		parqueadero = new Parqueadero();
 		String placa = "ALV-77D";
-		LocalDate localDateMartes = LocalDate.of(2018, 1, 30);
+		LocalDateTime localDateTimeMartes = LocalDateTime.of(2018, 1, 30, 10, 20);
 		
 		// Act
 		try {
 			
-			parqueadero.validarAutorizacion(placa, localDateMartes);
+			parqueadero.validarAutorizacion(placa, localDateTimeMartes);
 			fail();
 			
 		} catch (ParkingException e) {
@@ -48,16 +49,36 @@ public class ParkingTest {
 		//Arrange
 		parqueadero = new Parqueadero();
 		String placa = "ALV-77D";
-		LocalDate localDateMartes = LocalDate.of(2018, 1, 29);
+		LocalDateTime localDateTimeLunes = LocalDateTime.of(2018, 1, 29, 10, 20);
 		
 		// Act
 		try {
 			
-			parqueadero.validarAutorizacion(placa, localDateMartes);
+			parqueadero.validarAutorizacion(placa, localDateTimeLunes);
 			// Assert
 			
 		} catch (ParkingException e) {
 			Assert.assertEquals(Parqueadero.VEHICULO_NO_AUTORIZADO, e.getMessage());
+			fail();
+		}
+	}
+	
+	@Test
+	public void parqueaderoSoportaElTipoDeVehiculo() {
+		//Arrange
+		parqueadero = new Parqueadero();
+		int numeroDeCupos;
+		
+		// Act
+		try {
+			
+			numeroDeCupos = parqueadero.getNumeroDeCupos(TipoDeVehiculo.CARRO);			
+			
+			// Assert
+			assertNotNull(numeroDeCupos);
+			
+		} catch (ParkingException e) {
+			Assert.assertEquals(Parqueadero.VEHICULO_NO_SOPORTADO, e.getMessage());
 			fail();
 		}
 	}
