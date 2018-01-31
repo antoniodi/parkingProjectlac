@@ -22,7 +22,7 @@ public class Parqueadero {
 	private static final int CUPO_CARRO = 20;
 	private static final int CUPO_MOTO = 10;	
 	
-	public void validarAutorizacion(String placa, LocalDateTime fechaIngreso) throws ParkingException {
+	public void validarAutorizacion(String placa, LocalDateTime fechaIngreso) {
 		
 		if ((placa.toUpperCase().charAt(0) == 'A') && 
 			!(fechaIngreso.getDayOfWeek() == DayOfWeek.SUNDAY || fechaIngreso.getDayOfWeek() == DayOfWeek.MONDAY) ) {
