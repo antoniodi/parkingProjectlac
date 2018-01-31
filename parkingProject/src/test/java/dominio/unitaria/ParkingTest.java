@@ -29,7 +29,26 @@ import testdatabuilder.VehiculoTestDataBuilder;
 public class ParkingTest {
 	
 	@Test
-	public void vehiculoAutorizado() {
+	public void vehiculoAutorizadoDomingo() {
+		//Arrange
+		Parqueadero parqueadero = new Parqueadero();
+		String placa = "ALV-77D";
+		LocalDateTime fechaIngresoDomingo = LocalDateTime.of(2018, 1, 28, 10, 20);
+		
+		// Act
+		try {
+			
+			parqueadero.validarAutorizacion(placa, fechaIngresoDomingo);
+			
+		} catch (ParkingException e) {
+			// Assert
+			Assert.assertEquals(Parqueadero.VEHICULO_NO_AUTORIZADO, e.getMessage());
+			fail();
+		}
+	}
+	
+	@Test
+	public void vehiculoAutorizadoLunes() {
 		//Arrange
 		Parqueadero parqueadero = new Parqueadero();
 		String placa = "ALV-77D";
