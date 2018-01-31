@@ -23,7 +23,6 @@ public class TicketDePago {
 	 * @param diasDeParqueo
 	 */
 	public TicketDePago(Date horaSalida, int horasDeParqueo, int diasDeParqueo, BigDecimal total) {
-		super();
 		this.horaSalida = horaSalida;
 		this.horasDeParqueo = horasDeParqueo;
 		this.diasDeParqueo = diasDeParqueo;
@@ -55,9 +54,5 @@ public class TicketDePago {
 	public BigDecimal getTotal() {
 		return total;
 	}
-	
-	
-
-	
 	
 }

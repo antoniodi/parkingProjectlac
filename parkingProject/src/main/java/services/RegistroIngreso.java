@@ -36,4 +36,10 @@ public interface RegistroIngreso {
 	 */
 	public void registrarSalidaVehiculo(Vehiculo vehiculo, TicketDePago tikectDePago);
 
+	/**
+	 * 
+	 * @param placa
+	 * @return Vehiculo
+	 */
+	public Vehiculo obtenerVehiculoParqueadoPorPlaca(String placa);
 }

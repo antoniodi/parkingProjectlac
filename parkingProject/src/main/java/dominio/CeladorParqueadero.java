@@ -15,12 +15,15 @@ import services.RegistroIngreso;
 public class CeladorParqueadero {
 	
 	public static final String NO_HAY_CUPOS_DISPONIBLES = "No hay cupos disponibles.";
+	public static final String EL_VEHICULO_YA_SE_ENCUENTRA_ESTACIONADO = "El vehiculo ya se encuentra estacionado.";
 
 	private Parqueadero parqueadero;
 	private RegistroIngreso registroIngreso;
 	
 	/**
 	 * 
+	 * @param parqueadero
+	 * @param registroIngreso
 	 */
 	public CeladorParqueadero(Parqueadero parqueadero, RegistroIngreso registroIngreso) {
 	
@@ -28,29 +31,54 @@ public class CeladorParqueadero {
 		this.registroIngreso = registroIngreso;
 	}
 	
-	public void atenderSolicitudDeParqueo(Vehiculo vehiculo, LocalDateTime fechaIngreso) {
+	/**
+	 * 
+	 * @param vehiculo
+	 * @param fechaIngreso
+	 */
+	public void atenderSolicitudDeIngreso(Vehiculo vehiculo, LocalDateTime fechaIngreso) {
 		
-			parqueadero.validarAutorizacion(vehiculo.getPlaca(), fechaIngreso);
-			
-			hayCuposDisponibles(parqueadero.getNumeroDeCupos(vehiculo.getTipoDeVehiculo()),
-								registroIngreso.obtenerNumeroVehiculosParqueados(vehiculo.getTipoDeVehiculo()));
-			
-			registroIngreso.registrarIngresoVehiculo(vehiculo, LocalDateTime.now());		
+		comprobarSiElVehiculoEstaEstacionado(vehiculo.getPlaca());
+		
+		parqueadero.validarAutorizacion(vehiculo.getPlaca(), fechaIngreso);
+		
+		comprobarDisponibilidadDeCupos(vehiculo.getTipoDeVehiculo());
+		
+		registroIngreso.registrarIngresoVehiculo(vehiculo, LocalDateTime.now());		
 			
 	}
 	
+	public void atenderSalidaDelVehiculo() {
+		
+	}	
+	
+	public double calcularValorDelParqueo() {
+		return 18;
+	}
+	
+	public void determinarTiempoDeParqueo() {
+		
+	}
+	
+	
 	
 	/**	 
-	 * @param numeroDeCupos
-	 * @param numeroDevehiculosEstacionados
-	 * @return 
+	 * @param tipoDeVehiculo
 	 */
-	public void hayCuposDisponibles(int numeroDeCupos, int numeroDevehiculosEstacionados) {
+	public void comprobarDisponibilidadDeCupos(TipoDeVehiculo tipoDeVehiculo) {
 		
-		int numeroDeCuposDisponibles = numeroDeCupos - numeroDevehiculosEstacionados;
+		int numeroDeCuposDisponibles;
+		
+		numeroDeCuposDisponibles = parqueadero.getNumeroDeCupos(tipoDeVehiculo) - registroIngreso.obtenerNumeroVehiculosParqueados(tipoDeVehiculo);
 		
 		if ( numeroDeCuposDisponibles < 1 ) {
 			throw new ParkingException(NO_HAY_CUPOS_DISPONIBLES);
+		}
+	}
+	
+	public void comprobarSiElVehiculoEstaEstacionado(String placa) {
+		if (registroIngreso.obtenerVehiculoParqueadoPorPlaca(placa) == null) {
+			throw new ParkingException(EL_VEHICULO_YA_SE_ENCUENTRA_ESTACIONADO);
 		}
 	}
 
