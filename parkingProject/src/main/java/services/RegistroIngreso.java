@@ -3,6 +3,7 @@ package services;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import dominio.RegistroDeIngreso;
 import dominio.TicketDePago;
 import dominio.TipoDeVehiculo;
 import dominio.Vehiculo;
@@ -27,7 +28,7 @@ public interface RegistroIngreso {
 	 * @param Vehiculo
 	 * @param fechaDeIngreso
 	 */
-	public void registrarIngresoVehiculo(Vehiculo vehiculo, LocalDateTime fechaDeIngreso);
+	public void registrarIngresoVehiculo(RegistroDeIngreso registroDeIngreso);
 	
 	/**
 	 * Permite registrar la salida de un vehiculo
@@ -41,5 +42,5 @@ public interface RegistroIngreso {
 	 * @param placa
 	 * @return Vehiculo
 	 */
-	public Vehiculo obtenerVehiculoParqueadoPorPlaca(String placa);
+	public RegistroDeIngreso obtenerRegistroDeIngresoPorPlaca(String placa);
 }
