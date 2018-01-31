@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import dominio.CeladorParqueadero;
 import dominio.Parqueadero;
@@ -28,29 +27,6 @@ import testdatabuilder.VehiculoTestDataBuilder;
  *
  */
 public class ParkingTest {
-	
-//	@Autowired
-//	private Parqueadero parqueadero;
-
-	@Test
-	public void vehiculoNoAutorizado() {
-		//Arrange
-		Parqueadero parqueadero = new Parqueadero();
-		String placa = "ALV-77D";
-		LocalDateTime fechaIngresoMartes = LocalDateTime.of(2018, 1, 30, 10, 20);
-		
-		// Act
-		try {
-			
-			parqueadero.validarAutorizacion(placa, fechaIngresoMartes);
-			fail();
-			
-		} catch (ParkingException e) {
-			// Assert
-			Assert.assertEquals(Parqueadero.VEHICULO_NO_AUTORIZADO, e.getMessage());
-		}
-				
-	}
 	
 	@Test
 	public void vehiculoAutorizado() {

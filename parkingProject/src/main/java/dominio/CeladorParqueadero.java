@@ -45,7 +45,7 @@ public class CeladorParqueadero {
 	 * @param numeroDevehiculosEstacionados
 	 * @return 
 	 */
-	public void hayCuposDisponibles(int numeroDeCupos, int numeroDevehiculosEstacionados) throws ParkingException {
+	public void hayCuposDisponibles(int numeroDeCupos, int numeroDevehiculosEstacionados) {
 		
 		int numeroDeCuposDisponibles = numeroDeCupos - numeroDevehiculosEstacionados;
 		
