@@ -11,14 +11,14 @@ public enum TipoDeVehiculo {
 	
 	CARRO("ca"), MOTO("mo");
 	
-	private final String tipoDeVehiculo;
+	private final String abrebiaturaTipoDeVehiculo;
 
 	private TipoDeVehiculo(String tipoDeVehiculo) {
-		this.tipoDeVehiculo = tipoDeVehiculo;
+		this.abrebiaturaTipoDeVehiculo = tipoDeVehiculo;
 	}
 	
 	public String getTipoDeVehiculo() {		
-		return this.tipoDeVehiculo;
+		return this.abrebiaturaTipoDeVehiculo;
 	}
 	
 }

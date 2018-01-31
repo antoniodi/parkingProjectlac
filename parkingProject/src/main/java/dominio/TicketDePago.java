@@ -3,6 +3,7 @@
  */
 package dominio;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -13,17 +14,20 @@ public class TicketDePago {
 
 	private Date horaSalida;
 	private int horasDeParqueo;
-	private int DiasDeParqueo;
+	private int diasDeParqueo;
+	private BigDecimal total;
+	
 	/**
 	 * @param horaSalida
 	 * @param horasDeParqueo
 	 * @param diasDeParqueo
 	 */
-	public TicketDePago(Date horaSalida, int horasDeParqueo, int diasDeParqueo) {
+	public TicketDePago(Date horaSalida, int horasDeParqueo, int diasDeParqueo, BigDecimal total) {
 		super();
 		this.horaSalida = horaSalida;
 		this.horasDeParqueo = horasDeParqueo;
-		DiasDeParqueo = diasDeParqueo;
+		this.diasDeParqueo = diasDeParqueo;
+		this.total = total;
 	}
 	
 	/**
@@ -42,8 +46,17 @@ public class TicketDePago {
 	 * @return the diasDeParqueo
 	 */
 	public int getDiasDeParqueo() {
-		return DiasDeParqueo;
+		return diasDeParqueo;
 	}
+
+	/**
+	 * @return the total
+	 */
+	public BigDecimal getTotal() {
+		return total;
+	}
+	
+	
 
 	
 	

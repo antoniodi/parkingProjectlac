@@ -28,14 +28,15 @@ public class CeladorParqueadero {
 		this.registroIngreso = registroIngreso;
 	}
 	
-	public void AtenderSolicitudDeParqueo(Vehiculo vehiculo, LocalDateTime fechaIngreso) {
+	public void atenderSolicitudDeParqueo(Vehiculo vehiculo, LocalDateTime fechaIngreso) {
 		
-		parqueadero.validarAutorizacion(vehiculo.getPlaca(), fechaIngreso);
+			parqueadero.validarAutorizacion(vehiculo.getPlaca(), fechaIngreso);
 			
-		parqueadero.getNumeroDeCupos(vehiculo.getTipoDeVehiculo());
-		registroIngreso.obtenerNumeroVehiculosParqueados(vehiculo.getTipoDeVehiculo());
-		
-		registroIngreso.registrarIngresoVehiculo(vehiculo, LocalDateTime.now());
+			hayCuposDisponibles(parqueadero.getNumeroDeCupos(vehiculo.getTipoDeVehiculo()),
+								registroIngreso.obtenerNumeroVehiculosParqueados(vehiculo.getTipoDeVehiculo()));
+			
+			registroIngreso.registrarIngresoVehiculo(vehiculo, LocalDateTime.now());		
+			
 	}
 	
 	
@@ -46,7 +47,9 @@ public class CeladorParqueadero {
 	 */
 	public void hayCuposDisponibles(int numeroDeCupos, int numeroDevehiculosEstacionados) throws ParkingException {
 		
-		if ( (numeroDeCupos - numeroDevehiculosEstacionados) > 0 ) {
+		int numeroDeCuposDisponibles = numeroDeCupos - numeroDevehiculosEstacionados;
+		
+		if ( numeroDeCuposDisponibles < 1 ) {
 			throw new ParkingException(NO_HAY_CUPOS_DISPONIBLES);
 		}
 	}

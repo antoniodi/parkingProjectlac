@@ -10,9 +10,9 @@ import dominio.Vehiculo;
 public interface RegistroIngreso {
 	
 	/**
-	 * Permite obtener el número de vehiculos estacionados de un tipo especifico
+	 * Permite obtener el numero de vehiculos estacionados de un tipo especifico
 	 * @param tipoDeVehiculo
-	 * @return númeroDeVehiculosEstacionados
+	 * @return numeroDeVehiculosEstacionados
 	 */
 	public int obtenerNumeroVehiculosParqueados(TipoDeVehiculo tipoDeVehiculo);
 	

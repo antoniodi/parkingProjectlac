@@ -3,8 +3,6 @@
  */
 package dominio;
 
-import org.omg.CORBA.PUBLIC_MEMBER;
-
 /**
  * @author luis.cortes
  *
