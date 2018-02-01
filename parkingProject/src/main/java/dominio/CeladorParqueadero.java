@@ -6,7 +6,6 @@ package dominio;
 import java.math.BigDecimal;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 
 import dominio.exception.ParkingException;
 import services.RegistroIngreso;
@@ -19,7 +18,6 @@ public class CeladorParqueadero {
 	
 	public static final String NO_HAY_CUPOS_DISPONIBLES = "No hay cupos disponibles.";
 	public static final String EL_VEHICULO_YA_SE_ENCUENTRA_ESTACIONADO = "El vehiculo ya se encuentra estacionado.";
-	public static final String EL_VEHICULO_NO_SE_ENCUENTRA_ESTACIONADO = "El vehiculo no se encuentra estacionado.";
 
 	private Parqueadero parqueadero;
 	private RegistroIngreso registroIngreso;
@@ -42,7 +40,7 @@ public class CeladorParqueadero {
 	 */
 	public void atenderSolicitudDeIngreso(Vehiculo vehiculo, LocalDateTime fechaIngreso) {
 		
-		comprobarSiElVehiculoEstaParqueado(vehiculo.getPlaca());
+		elVehiculoEstaParqueado(vehiculo.getPlaca());
 		
 		parqueadero.validarAutorizacion(vehiculo.getPlaca(), fechaIngreso);
 		
@@ -59,17 +57,10 @@ public class CeladorParqueadero {
 	public void atenderSalidaDelVehiculo(String placa, LocalDateTime fechaSalida) {
 		
 		RegistroDeIngreso registroDeIngreso = registroIngreso.obtenerRegistroDeIngresoPorPlaca(placa);
+			
+		TicketDePago ticketDePago = generarTicketDePago(registroDeIngreso, fechaSalida);
 		
-		if ( registroDeIngreso == null) {
-			throw new ParkingException(EL_VEHICULO_NO_SE_ENCUENTRA_ESTACIONADO);
-		} else {
-			
-			TicketDePago ticketDePago;
-			
-			ticketDePago = generarTicketDePago(registroDeIngreso, fechaSalida);
-			
-			this.registroIngreso.registrarSalidaVehiculo(ticketDePago);
-		}
+		this.registroIngreso.registrarSalidaVehiculo(ticketDePago);
 		
 	}	
 	
@@ -99,8 +90,6 @@ public class CeladorParqueadero {
 		
 	}
 	
-	
-	
 	/**	 
 	 * @param tipoDeVehiculo
 	 */
@@ -115,10 +104,13 @@ public class CeladorParqueadero {
 		}
 	}
 	
-	public void comprobarSiElVehiculoEstaParqueado(String placa) {
-		if (registroIngreso.obtenerRegistroDeIngresoPorPlaca(placa) == null) {
+	public boolean elVehiculoEstaParqueado(String placa) {
+		
+		if (registroIngreso.obtenerRegistroDeIngresoPorPlaca(placa) != null) {
 			throw new ParkingException(EL_VEHICULO_YA_SE_ENCUENTRA_ESTACIONADO);
 		}
+		
+		return false;
 	}	
 
 }

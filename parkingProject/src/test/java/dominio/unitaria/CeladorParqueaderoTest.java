@@ -51,11 +51,15 @@ public class CeladorParqueaderoTest {
 		// Act
 		try {
 		
-			celadorParqueadero.comprobarSiElVehiculoEstaParqueado(placa);
+			
+			celadorParqueadero.elVehiculoEstaParqueado(placa);
+			fail();
 			
 		} catch (ParkingException e) {
+			
 			// Assert
-			Assert.assertNotEquals(CeladorParqueadero.EL_VEHICULO_YA_SE_ENCUENTRA_ESTACIONADO, e.getMessage());			
+			Assert.assertEquals(CeladorParqueadero.EL_VEHICULO_YA_SE_ENCUENTRA_ESTACIONADO, e.getMessage());
+			
 		}				
 	}	
 	
@@ -73,8 +77,7 @@ public class CeladorParqueaderoTest {
 		// Act
 		try {
 		
-			celadorParqueadero.comprobarSiElVehiculoEstaParqueado(placa);
-			fail();
+			Assert.assertFalse(celadorParqueadero.elVehiculoEstaParqueado(placa));			
 			
 		} catch (ParkingException e) {
 			// Assert
@@ -100,7 +103,8 @@ public class CeladorParqueaderoTest {
 			
 		} catch (ParkingException e) {
 			// Assert
-			Assert.assertNotEquals(CeladorParqueadero.NO_HAY_CUPOS_DISPONIBLES, e.getMessage());			
+			Assert.assertEquals(CeladorParqueadero.NO_HAY_CUPOS_DISPONIBLES, e.getMessage());
+			fail();
 		}				
 	}
 	
@@ -144,19 +148,16 @@ public class CeladorParqueaderoTest {
 		
 		when(parqueadero.getNumeroDeCupos(TipoDeVehiculo.CARRO)).thenReturn(20);
 		when(registroIngreso.obtenerNumeroVehiculosParqueados(TipoDeVehiculo.CARRO)).thenReturn(19);
-		when(registroIngreso.obtenerRegistroDeIngresoPorPlaca(vehiculo.getPlaca())).thenReturn(registroDeIngreso);
+		when(registroIngreso.obtenerRegistroDeIngresoPorPlaca(vehiculo.getPlaca())).thenReturn(null);
 				
 		CeladorParqueadero celadorParqueadero = new CeladorParqueadero(parqueadero, registroIngreso);		
 		
-		try {
-			//Act
-			celadorParqueadero.atenderSolicitudDeIngreso(vehiculo, fechaIngresoMartes);
-			
-		} catch (ParkingException e) {
-			// Assert
-			Assert.assertNotEquals(CeladorParqueadero.NO_HAY_CUPOS_DISPONIBLES, e.getMessage());
-			
-		}
+		//Act
+		celadorParqueadero.atenderSolicitudDeIngreso(vehiculo, fechaIngresoMartes);
+					
+		// Assert
+		Assert.assertEquals(CeladorParqueadero.NO_HAY_CUPOS_DISPONIBLES, e.getMessage());
+		
 			
 	}
 	
@@ -173,11 +174,10 @@ public class CeladorParqueaderoTest {
 				conTipoDeVehiculo(TipoDeVehiculo.CARRO);
 		
 		Vehiculo vehiculo = vehiculoTestDataBuilder.buildVehiculo();	
-		RegistroDeIngreso registroDeIngreso = new RegistroDeIngreso(vehiculo, fechaIngresoMartes);
 		
 		when(parqueadero.getNumeroDeCupos(TipoDeVehiculo.CARRO)).thenReturn(20);
 		when(registroIngreso.obtenerNumeroVehiculosParqueados(TipoDeVehiculo.CARRO)).thenReturn(20);
-		when(registroIngreso.obtenerRegistroDeIngresoPorPlaca(vehiculo.getPlaca())).thenReturn(registroDeIngreso);
+		when(registroIngreso.obtenerRegistroDeIngresoPorPlaca(vehiculo.getPlaca())).thenReturn(null);
 				
 		CeladorParqueadero celadorParqueadero = new CeladorParqueadero(parqueadero, registroIngreso);		
 		
@@ -226,7 +226,7 @@ public class CeladorParqueaderoTest {
 	
 	@Test
 	public void registrarVehiculoNoAutorizado() {
-		//Arrange
+		// Arrange
 		Parqueadero parqueadero = mock(Parqueadero.class);
 		RegistroIngreso registroIngreso = mock(RegistroIngreso.class);
 
@@ -243,12 +243,12 @@ public class CeladorParqueaderoTest {
 				when(parqueadero).validarAutorizacion(vehiculo.getPlaca(), fechaIngresoLunes);
 		when(parqueadero.getNumeroDeCupos(TipoDeVehiculo.CARRO)).thenReturn(20);
 		when(registroIngreso.obtenerNumeroVehiculosParqueados(TipoDeVehiculo.CARRO)).thenReturn(19);
-		when(registroIngreso.obtenerRegistroDeIngresoPorPlaca(vehiculo.getPlaca())).thenReturn(registroDeIngreso);			
+		when(registroIngreso.obtenerRegistroDeIngresoPorPlaca(vehiculo.getPlaca())).thenReturn(null);			
 				
 		CeladorParqueadero celadorParqueadero = new CeladorParqueadero(parqueadero, registroIngreso);
 				
 		try {
-			//Act
+			// Act
 			celadorParqueadero.atenderSolicitudDeIngreso(vehiculo, fechaIngresoLunes);
 			fail();
 			
@@ -261,25 +261,25 @@ public class CeladorParqueaderoTest {
 	// Vehiculos con diferente fecha de ingreso y salida
 	private Object[] parametersToTestGenerarTicketDePago(){
 		return new Object[] {
-			new Object[] {new RegistroDeIngreso(new VehiculoTestDataBuilder().conTipoDeVehiculo(TipoDeVehiculo.MOTO).conCilindraje(500).buildVehiculo(),
+			new Object[] {new RegistroDeIngreso(new VehiculoTestDataBuilder().conCilindraje(500).buildVehiculo(),
 												LocalDateTime.of(2018, 1, 29, 10, 0)),
 						 LocalDateTime.of(2018, 1, 29, 10, 0),
 						 new BigDecimal("0"),
 						 new Tarifa(new BigDecimal(4000), new BigDecimal(500)),
 						 new BigDecimal("0")},
-			new Object[] {new RegistroDeIngreso(new VehiculoTestDataBuilder().conTipoDeVehiculo(TipoDeVehiculo.MOTO).conCilindraje(200).buildVehiculo(),
+			new Object[] {new RegistroDeIngreso(new VehiculoTestDataBuilder().conCilindraje(500).buildVehiculo(),
 										    	LocalDateTime.of(2018, 1, 29, 10, 0)),
 						 LocalDateTime.of(2018, 1, 29, 12, 0), 
 						 new BigDecimal("0"),
 						 new Tarifa(new BigDecimal(4000), new BigDecimal(500)),
 						 new BigDecimal("1000")},
-			new Object[] {new RegistroDeIngreso(new VehiculoTestDataBuilder().conTipoDeVehiculo(TipoDeVehiculo.MOTO).conCilindraje(650).buildVehiculo(),
+			new Object[] {new RegistroDeIngreso(new VehiculoTestDataBuilder().conCilindraje(650).buildVehiculo(),
 						  						LocalDateTime.of(2018, 1, 29, 10, 0)),
 						 LocalDateTime.of(2018, 1, 29, 20, 0), 
 						 new BigDecimal("2000"),
 						 new Tarifa(new BigDecimal(4000), new BigDecimal(500)),
 						 new BigDecimal("6000")},
-			new Object[] {new RegistroDeIngreso(new VehiculoTestDataBuilder().conTipoDeVehiculo(TipoDeVehiculo.MOTO).conCilindraje(650).buildVehiculo(),
+			new Object[] {new RegistroDeIngreso(new VehiculoTestDataBuilder().conCilindraje(501).buildVehiculo(),
 												LocalDateTime.of(2018, 1, 29, 10, 0)),
 						 LocalDateTime.of(2018, 1, 29, 12, 0), 
 						 new BigDecimal("2000"),
@@ -291,7 +291,7 @@ public class CeladorParqueaderoTest {
 					     new BigDecimal("0"),
 					     new Tarifa(new BigDecimal(8000), new BigDecimal(1000)),
 					     new BigDecimal("11000")},
-			new Object[] {new RegistroDeIngreso(new VehiculoTestDataBuilder().conTipoDeVehiculo(TipoDeVehiculo.CARRO).conCilindraje(500).buildVehiculo(),
+			new Object[] {new RegistroDeIngreso(new VehiculoTestDataBuilder().conTipoDeVehiculo(TipoDeVehiculo.CARRO).conCilindraje(501).buildVehiculo(),
 												LocalDateTime.of(2018, 1, 25, 10, 0)),
 						 LocalDateTime.of(2018, 1, 25, 12, 0),
 						 new BigDecimal("0"),
@@ -304,7 +304,7 @@ public class CeladorParqueaderoTest {
 	@Parameters(method = "parametersToTestGenerarTicketDePago")
 	public void generarTicketDePago(RegistroDeIngreso registroDeIngreso, LocalDateTime fechaSalida, BigDecimal recargo, 
 			Tarifa tarifa,BigDecimal expectedValue) {
-		//Arrange
+		// Arrange
 		Parqueadero parqueadero = mock(Parqueadero.class);
 		RegistroIngreso registroIngreso = mock(RegistroIngreso.class);
 		
@@ -314,15 +314,12 @@ public class CeladorParqueaderoTest {
 				
 		CeladorParqueadero celadorParqueadero = new CeladorParqueadero(parqueadero, registroIngreso);			
 				
-		try {
-			//Act
-			TicketDePago ticketDePago = celadorParqueadero.generarTicketDePago(registroDeIngreso, fechaSalida);
-			Assert.assertEquals(expectedValue, ticketDePago.getTotal());
-			
-		} catch (ParkingException e) {
-			// Assert
-			Assert.assertNotEquals(CeladorParqueadero.EL_VEHICULO_YA_SE_ENCUENTRA_ESTACIONADO, e.getMessage());
-		}				
+		// Act
+		TicketDePago ticketDePago = celadorParqueadero.generarTicketDePago(registroDeIngreso, fechaSalida);
+		
+		// Assert
+		Assert.assertEquals(expectedValue, ticketDePago.getTotal());
+							
 	}
 
 }
