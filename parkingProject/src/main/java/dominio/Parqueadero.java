@@ -20,7 +20,7 @@ public class Parqueadero {
 	
 	public static final String VEHICULO_NO_AUTORIZADO = "El vehiculo no esta autorizado a ingresar.";
 	public static final int COBRO_POR_DIAS_DESDE = 9;
-	public static final int COBRO_POR_DIAS_HASTA = 24;
+	public static final int DURACION_MAXIMA_DIA_DE_PARQUEO = 24;
 	
 	private static final int CUPO_CARRO = 20;
 	private static final int CUPO_MOTO = 10;	

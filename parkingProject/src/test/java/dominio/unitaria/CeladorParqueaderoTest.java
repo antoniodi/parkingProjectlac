@@ -8,18 +8,24 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 
 import dominio.CeladorParqueadero;
 import dominio.Parqueadero;
 import dominio.RegistroDeIngreso;
+import dominio.Tarifa;
+import dominio.TicketDePago;
 import dominio.TipoDeVehiculo;
 import dominio.Vehiculo;
 import dominio.exception.ParkingException;
+import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
 import services.RegistroIngreso;
 import testdatabuilder.VehiculoTestDataBuilder;
 
@@ -27,6 +33,7 @@ import testdatabuilder.VehiculoTestDataBuilder;
  * @author luis.cortes
  *
  */
+@RunWith(JUnitParamsRunner.class)
 public class CeladorParqueaderoTest {
 	
 	@Test
@@ -248,6 +255,73 @@ public class CeladorParqueaderoTest {
 		} catch (ParkingException e) {
 			// Assert
 			Assert.assertEquals(Parqueadero.VEHICULO_NO_AUTORIZADO, e.getMessage());
+		}				
+	}
+	
+	// Vehiculos con diferente fecha de ingreso y salida
+	private Object[] parametersToTestGenerarTicketDePago(){
+		return new Object[] {
+			new Object[] {new RegistroDeIngreso(new VehiculoTestDataBuilder().conTipoDeVehiculo(TipoDeVehiculo.MOTO).conCilindraje(500).buildVehiculo(),
+												LocalDateTime.of(2018, 1, 29, 10, 0)),
+						 LocalDateTime.of(2018, 1, 29, 10, 0),
+						 new BigDecimal("0"),
+						 new Tarifa(new BigDecimal(4000), new BigDecimal(500)),
+						 new BigDecimal("0")},
+			new Object[] {new RegistroDeIngreso(new VehiculoTestDataBuilder().conTipoDeVehiculo(TipoDeVehiculo.MOTO).conCilindraje(200).buildVehiculo(),
+										    	LocalDateTime.of(2018, 1, 29, 10, 0)),
+						 LocalDateTime.of(2018, 1, 29, 12, 0), 
+						 new BigDecimal("0"),
+						 new Tarifa(new BigDecimal(4000), new BigDecimal(500)),
+						 new BigDecimal("1000")},
+			new Object[] {new RegistroDeIngreso(new VehiculoTestDataBuilder().conTipoDeVehiculo(TipoDeVehiculo.MOTO).conCilindraje(650).buildVehiculo(),
+						  						LocalDateTime.of(2018, 1, 29, 10, 0)),
+						 LocalDateTime.of(2018, 1, 29, 20, 0), 
+						 new BigDecimal("2000"),
+						 new Tarifa(new BigDecimal(4000), new BigDecimal(500)),
+						 new BigDecimal("6000")},
+			new Object[] {new RegistroDeIngreso(new VehiculoTestDataBuilder().conTipoDeVehiculo(TipoDeVehiculo.MOTO).conCilindraje(650).buildVehiculo(),
+												LocalDateTime.of(2018, 1, 29, 10, 0)),
+						 LocalDateTime.of(2018, 1, 29, 12, 0), 
+						 new BigDecimal("2000"),
+						 new Tarifa(new BigDecimal(4000), new BigDecimal(500)),
+						 new BigDecimal("3000")},
+			new Object[] {new RegistroDeIngreso(new VehiculoTestDataBuilder().conTipoDeVehiculo(TipoDeVehiculo.CARRO).conCilindraje(500).buildVehiculo(),
+						  						LocalDateTime.of(2018, 1, 25, 10, 0)),
+					     LocalDateTime.of(2018, 1, 26, 13, 0),
+					     new BigDecimal("0"),
+					     new Tarifa(new BigDecimal(8000), new BigDecimal(1000)),
+					     new BigDecimal("11000")},
+			new Object[] {new RegistroDeIngreso(new VehiculoTestDataBuilder().conTipoDeVehiculo(TipoDeVehiculo.CARRO).conCilindraje(500).buildVehiculo(),
+												LocalDateTime.of(2018, 1, 25, 10, 0)),
+						 LocalDateTime.of(2018, 1, 25, 12, 0),
+						 new BigDecimal("0"),
+						 new Tarifa(new BigDecimal(8000), new BigDecimal(1000)),
+						 new BigDecimal("2000")}
+		};
+	}
+
+	@Test
+	@Parameters(method = "parametersToTestGenerarTicketDePago")
+	public void generarTicketDePago(RegistroDeIngreso registroDeIngreso, LocalDateTime fechaSalida, BigDecimal recargo, 
+			Tarifa tarifa,BigDecimal expectedValue) {
+		//Arrange
+		Parqueadero parqueadero = mock(Parqueadero.class);
+		RegistroIngreso registroIngreso = mock(RegistroIngreso.class);
+		
+		when(parqueadero.obtenerRecargos(registroDeIngreso.getVehiculo())).thenReturn(recargo);
+		when(registroIngreso.obtenerTrarifaPorTipoDeVehiculo(registroDeIngreso.getVehiculo().getTipoDeVehiculo())).
+				thenReturn(tarifa);			
+				
+		CeladorParqueadero celadorParqueadero = new CeladorParqueadero(parqueadero, registroIngreso);			
+				
+		try {
+			//Act
+			TicketDePago ticketDePago = celadorParqueadero.generarTicketDePago(registroDeIngreso, fechaSalida);
+			Assert.assertEquals(expectedValue, ticketDePago.getTotal());
+			
+		} catch (ParkingException e) {
+			// Assert
+			Assert.assertNotEquals(CeladorParqueadero.EL_VEHICULO_YA_SE_ENCUENTRA_ESTACIONADO, e.getMessage());
 		}				
 	}
 

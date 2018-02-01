@@ -14,8 +14,6 @@ public class TicketDePago {
 	
 	private Vehiculo vehiculo;
 	private LocalDateTime fechaSalida;
-	private long horasDeParqueo;
-	private long diasDeParqueo;
 	private BigDecimal total;	
 
 	/**
@@ -25,13 +23,10 @@ public class TicketDePago {
 	 * @param diasDeParqueo
 	 * @param total
 	 */
-	public TicketDePago(Vehiculo vehiculo, LocalDateTime fechaSalida, int horasDeParqueo, int diasDeParqueo,
-			BigDecimal total) {
+	public TicketDePago(Vehiculo vehiculo, LocalDateTime fechaSalida, BigDecimal total) {
 		
 		this.vehiculo = vehiculo;
 		this.fechaSalida = fechaSalida;
-		this.horasDeParqueo = horasDeParqueo;
-		this.diasDeParqueo = diasDeParqueo;
 		this.total = total;
 	}
 
@@ -47,20 +42,6 @@ public class TicketDePago {
 	 */
 	public LocalDateTime getFechaSalida() {
 		return fechaSalida;
-	}
-
-	/**
-	 * @return the horasDeParqueo
-	 */
-	public long getHorasDeParqueo() {
-		return horasDeParqueo;
-	}
-
-	/**
-	 * @return the diasDeParqueo
-	 */
-	public long getDiasDeParqueo() {
-		return diasDeParqueo;
 	}
 
 	/**

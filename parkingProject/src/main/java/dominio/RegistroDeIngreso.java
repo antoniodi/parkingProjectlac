@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 public class RegistroDeIngreso {
 
 	private Vehiculo vehiculo;
-	private LocalDateTime fechaDeIngresio;
+	private LocalDateTime fechaDeIngreso;
 	
 	
 	
@@ -15,7 +15,7 @@ public class RegistroDeIngreso {
 	 */
 	public RegistroDeIngreso(Vehiculo vehiculo, LocalDateTime fechaDeIngresio) {		
 		this.vehiculo = vehiculo;
-		this.fechaDeIngresio = fechaDeIngresio;
+		this.fechaDeIngreso = fechaDeIngresio;
 	}
 	
 	/**
@@ -28,7 +28,7 @@ public class RegistroDeIngreso {
 	 * @return the fechaDeIngresio
 	 */
 	public LocalDateTime getFechaDeIngresio() {
-		return fechaDeIngresio;
+		return fechaDeIngreso;
 	}
 	
 	

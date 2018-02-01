@@ -3,6 +3,7 @@ package services;
 import java.util.List;
 
 import dominio.RegistroDeIngreso;
+import dominio.Tarifa;
 import dominio.TicketDePago;
 import dominio.TipoDeVehiculo;
 import dominio.Vehiculo;
@@ -27,14 +28,7 @@ public interface RegistroIngreso {
 	 * @param Vehiculo
 	 * @param fechaDeIngreso
 	 */
-	public void registrarIngresoVehiculo(RegistroDeIngreso registroDeIngreso);
-	
-	/**
-	 * Permite registrar la salida de un vehiculo
-	 * @param Vehiculo
-	 * @param TicketDeSalida
-	 */
-	public void registrarSalidaVehiculo(TicketDePago tikectDePago);
+	public void registrarIngresoVehiculo(RegistroDeIngreso registroDeIngreso);	
 
 	/**
 	 * 
@@ -42,4 +36,19 @@ public interface RegistroIngreso {
 	 * @return Vehiculo
 	 */
 	public RegistroDeIngreso obtenerRegistroDeIngresoPorPlaca(String placa);
+	
+	/**
+	 * 
+	 * @param tipoDeVehiculo
+	 * @return Tarifa
+	 */
+	public Tarifa obtenerTrarifaPorTipoDeVehiculo(TipoDeVehiculo tipoDeVehiculo);
+	
+	/**
+	 * Permite registrar la salida de un vehiculo
+	 * @param Vehiculo
+	 * @param TicketDeSalida
+	 */
+	public void registrarSalidaVehiculo(TicketDePago tikectDePago);
+	
 }
