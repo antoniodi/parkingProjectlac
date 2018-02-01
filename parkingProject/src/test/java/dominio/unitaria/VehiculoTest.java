@@ -35,8 +35,7 @@ public class VehiculoTest {
 		//Arrange
 		assertEquals(CILINDRAJE, vehiculo.getCilindraje());
 		assertEquals(PLACA, vehiculo.getPlaca());
-		assertEquals(TIPODEVEHICULO, vehiculo.getTipoDeVehiculo());
-		
+		assertEquals(TIPODEVEHICULO, vehiculo.getTipoDeVehiculo());		
 	}
 
 }

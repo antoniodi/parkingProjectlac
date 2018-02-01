@@ -27,7 +27,7 @@ import testdatabuilder.VehiculoTestDataBuilder;
  * @author luis.cortes
  *
  */
-public class ParkingEntryTest {
+public class CeladorParqueaderoTest {
 	
 	@Test
 	public void vehiculoSeEncuentraParqueado() {
@@ -48,8 +48,7 @@ public class ParkingEntryTest {
 			
 		} catch (ParkingException e) {
 			// Assert
-			Assert.assertEquals(CeladorParqueadero.EL_VEHICULO_YA_SE_ENCUENTRA_ESTACIONADO, e.getMessage());
-			fail();
+			Assert.assertNotEquals(CeladorParqueadero.EL_VEHICULO_YA_SE_ENCUENTRA_ESTACIONADO, e.getMessage());			
 		}				
 	}	
 	
@@ -94,8 +93,7 @@ public class ParkingEntryTest {
 			
 		} catch (ParkingException e) {
 			// Assert
-			Assert.assertEquals(CeladorParqueadero.NO_HAY_CUPOS_DISPONIBLES, e.getMessage());
-			fail();
+			Assert.assertNotEquals(CeladorParqueadero.NO_HAY_CUPOS_DISPONIBLES, e.getMessage());			
 		}				
 	}
 	
@@ -149,8 +147,8 @@ public class ParkingEntryTest {
 			
 		} catch (ParkingException e) {
 			// Assert
-			Assert.assertEquals(CeladorParqueadero.NO_HAY_CUPOS_DISPONIBLES, e.getMessage());
-			fail();
+			Assert.assertNotEquals(CeladorParqueadero.NO_HAY_CUPOS_DISPONIBLES, e.getMessage());
+			
 		}
 			
 	}
@@ -215,8 +213,7 @@ public class ParkingEntryTest {
 			
 		} catch (ParkingException e) {
 			// Assert
-			Assert.assertEquals(Parqueadero.VEHICULO_NO_AUTORIZADO, e.getMessage());
-			fail();
+			Assert.assertNotEquals(Parqueadero.VEHICULO_NO_AUTORIZADO, e.getMessage());			
 		}				
 	}
 	
@@ -253,6 +250,5 @@ public class ParkingEntryTest {
 			Assert.assertEquals(Parqueadero.VEHICULO_NO_AUTORIZADO, e.getMessage());
 		}				
 	}
-	
 
 }

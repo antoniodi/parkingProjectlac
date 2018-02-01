@@ -4,47 +4,62 @@
 package dominio;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * @author luis.cortes
  *
  */
 public class TicketDePago {
-
-	private Date horaSalida;
-	private int horasDeParqueo;
-	private int diasDeParqueo;
-	private BigDecimal total;
 	
+	private Vehiculo vehiculo;
+	private LocalDateTime fechaSalida;
+	private long horasDeParqueo;
+	private long diasDeParqueo;
+	private BigDecimal total;	
+
 	/**
-	 * @param horaSalida
+	 * @param vehiculo
+	 * @param fechaSalida
 	 * @param horasDeParqueo
 	 * @param diasDeParqueo
+	 * @param total
 	 */
-	public TicketDePago(Date horaSalida, int horasDeParqueo, int diasDeParqueo, BigDecimal total) {
-		this.horaSalida = horaSalida;
+	public TicketDePago(Vehiculo vehiculo, LocalDateTime fechaSalida, int horasDeParqueo, int diasDeParqueo,
+			BigDecimal total) {
+		
+		this.vehiculo = vehiculo;
+		this.fechaSalida = fechaSalida;
 		this.horasDeParqueo = horasDeParqueo;
 		this.diasDeParqueo = diasDeParqueo;
 		this.total = total;
 	}
-	
+
 	/**
-	 * @return the horaSalida
+	 * @return the vehiculo
 	 */
-	public Date getHoraSalida() {
-		return horaSalida;
+	public Vehiculo getVehiculo() {
+		return vehiculo;
 	}
+
+	/**
+	 * @return the fechaSalida
+	 */
+	public LocalDateTime getFechaSalida() {
+		return fechaSalida;
+	}
+
 	/**
 	 * @return the horasDeParqueo
 	 */
-	public int getHorasDeParqueo() {
+	public long getHorasDeParqueo() {
 		return horasDeParqueo;
 	}
+
 	/**
 	 * @return the diasDeParqueo
 	 */
-	public int getDiasDeParqueo() {
+	public long getDiasDeParqueo() {
 		return diasDeParqueo;
 	}
 
@@ -54,5 +69,5 @@ public class TicketDePago {
 	public BigDecimal getTotal() {
 		return total;
 	}
-	
+
 }

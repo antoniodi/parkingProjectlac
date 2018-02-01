@@ -1,6 +1,5 @@
 package services;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import dominio.RegistroDeIngreso;
@@ -35,7 +34,7 @@ public interface RegistroIngreso {
 	 * @param Vehiculo
 	 * @param TicketDeSalida
 	 */
-	public void registrarSalidaVehiculo(Vehiculo vehiculo, TicketDePago tikectDePago);
+	public void registrarSalidaVehiculo(TicketDePago tikectDePago);
 
 	/**
 	 * 

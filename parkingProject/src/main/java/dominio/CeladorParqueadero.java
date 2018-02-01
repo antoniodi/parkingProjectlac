@@ -3,6 +3,8 @@
  */
 package dominio;
 
+import java.math.BigDecimal;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
@@ -62,18 +64,29 @@ public class CeladorParqueadero {
 			throw new ParkingException(EL_VEHICULO_NO_SE_ENCUENTRA_ESTACIONADO);
 		} else {
 			
+			TicketDePago ticketDePago;
 			
+			ticketDePago = generarTicketDePago(registroDeIngreso, fechaSalida);
+			
+			this.registroIngreso.registrarSalidaVehiculo(ticketDePago);
 		}
 		
 	}	
 	
-	public double calcularValorDelParqueo() {
-		return 18;
-	}
-	
-	public long calcularHorasDeParqueo(LocalDateTime fechaIngreso, LocalDateTime fechaSalida) {			
+	public TicketDePago generarTicketDePago(RegistroDeIngreso registroDeIngreso, LocalDateTime fechaSalida) {					
 		
-		return ChronoUnit.HOURS.between(fechaIngreso, fechaSalida);
+		BigDecimal total = new BigDecimal(0);
+		Duration duracion = Duration.between(registroDeIngreso.getFechaDeIngresio(), fechaSalida);
+//		long numeroDeHorasDeParqueo = ChronoUnit.HOURS.between(registroDeIngreso.getFechaDeIngresio(), fechaSalida);
+//		long numeroDeDiasDeParqueo = Math.floorMod(numeroDeHorasDeParqueo, Parqueadero.COBRO_POR_DIAS_HASTA);
+//		
+//		long numeroDeHorasAFacturar = 10;
+//		long numeroDeDiasAFacturar = 0;
+//		
+//		total = total.add(parqueadero.obtenerRecargos(registroDeIngreso.getVehiculo()));
+//		
+//		return new TicketDePago(vehiculo, fechaSalida, horasDeParqueo, diasDeParqueo, total);
+		return null;
 		
 	}
 	

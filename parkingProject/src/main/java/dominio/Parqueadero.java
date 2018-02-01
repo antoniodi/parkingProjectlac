@@ -3,6 +3,7 @@
  */
 package dominio;
 
+import java.math.BigDecimal;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 
@@ -18,6 +19,8 @@ import dominio.exception.ParkingException;
 public class Parqueadero {
 	
 	public static final String VEHICULO_NO_AUTORIZADO = "El vehiculo no esta autorizado a ingresar.";
+	public static final int COBRO_POR_DIAS_DESDE = 9;
+	public static final int COBRO_POR_DIAS_HASTA = 24;
 	
 	private static final int CUPO_CARRO = 20;
 	private static final int CUPO_MOTO = 10;	
@@ -45,6 +48,24 @@ public class Parqueadero {
 		}
 	}
 	
-	
+	/**
+	 * 
+	 * @param vehiculo
+	 * @return valorRecargo
+	 */
+	public BigDecimal obtenerRecargos(Vehiculo vehiculo) {
+		
+		final BigDecimal VALOR_RECARGO_MOTOS_ALTO_CILINDRAJE = new BigDecimal(2000);
+		final int MOTOS_BAJO_CILINDRAJE_HASTA = 500; 
+		
+		BigDecimal recargo = new BigDecimal(0);
+		
+		if (vehiculo.getTipoDeVehiculo() == TipoDeVehiculo.MOTO &&  vehiculo.getCilindraje() > MOTOS_BAJO_CILINDRAJE_HASTA) {
+			recargo = recargo.add(VALOR_RECARGO_MOTOS_ALTO_CILINDRAJE);
+		}
+		
+		return recargo;
+		
+	}
 
 }
