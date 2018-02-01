@@ -4,6 +4,7 @@
 package dominio;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 import dominio.exception.ParkingException;
 import services.RegistroIngreso;
@@ -53,13 +54,14 @@ public class CeladorParqueadero {
 	 * 
 	 * @param placa
 	 */
-	public void atenderSalidaDelVehiculo(String placa) {
+	public void atenderSalidaDelVehiculo(String placa, LocalDateTime fechaSalida) {
 		
 		RegistroDeIngreso registroDeIngreso = registroIngreso.obtenerRegistroDeIngresoPorPlaca(placa);
 		
 		if ( registroDeIngreso == null) {
 			throw new ParkingException(EL_VEHICULO_NO_SE_ENCUENTRA_ESTACIONADO);
 		} else {
+			
 			
 		}
 		
@@ -69,7 +71,9 @@ public class CeladorParqueadero {
 		return 18;
 	}
 	
-	public void determinarTiempoDeParqueo() {
+	public long calcularHorasDeParqueo(LocalDateTime fechaIngreso, LocalDateTime fechaSalida) {			
+		
+		return ChronoUnit.HOURS.between(fechaIngreso, fechaSalida);
 		
 	}
 	
