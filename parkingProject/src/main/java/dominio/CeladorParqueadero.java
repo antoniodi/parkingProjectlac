@@ -7,7 +7,10 @@ import java.math.BigDecimal;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import dominio.exception.ParkingException;
+import services.AdmonTarifa;
 import services.RegistroIngreso;
 
 /**
@@ -21,13 +24,14 @@ public class CeladorParqueadero {
 
 	private Parqueadero parqueadero;
 	private RegistroIngreso registroIngreso;
+	private AdmonTarifa admonTarifa;
 	
 	/**
 	 * 
 	 * @param parqueadero
 	 * @param registroIngreso
 	 */
-	public CeladorParqueadero(Parqueadero parqueadero, RegistroIngreso registroIngreso) {
+	public CeladorParqueadero(Parqueadero parqueadero, RegistroIngreso registroIngreso, AdmonTarifa admonTarifa) {
 	
 		this.parqueadero = parqueadero;
 		this.registroIngreso = registroIngreso;
@@ -77,7 +81,7 @@ public class CeladorParqueadero {
 			numeroDeHorasDeParqueo = 0;
 		}
 		
-		Tarifa tarifa = registroIngreso.obtenerTrarifaPorTipoDeVehiculo(registroDeIngreso.getVehiculo().getTipoDeVehiculo());
+		Tarifa tarifa = admonTarifa.obtenerTrarifaPorTipoDeVehiculo(registroDeIngreso.getVehiculo().getTipoDeVehiculo());
 		
 		total = total.add(tarifa.getValorDia().multiply(new BigDecimal(numeroDeDiasDeParqueo)));
 		total = total.add(tarifa.getValorHora().multiply(new BigDecimal(numeroDeHorasDeParqueo)));

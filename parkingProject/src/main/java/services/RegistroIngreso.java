@@ -7,8 +7,9 @@ import dominio.Tarifa;
 import dominio.TicketDePago;
 import dominio.TipoDeVehiculo;
 import dominio.Vehiculo;
+import interfaces.DAOTarifa;
 
-public interface RegistroIngreso {
+public interface RegistroIngreso extends DAOTarifa {
 	
 	/**
 	 * Permite obtener el numero de vehiculos estacionados de un tipo especifico
@@ -21,7 +22,7 @@ public interface RegistroIngreso {
 	 * Permite obtener los vehiculos estacionados
 	 * @return vehiculosEstacionados
 	 */
-	public List<Vehiculo> obtenerVehiculosParqueados();
+	public List<RegistroDeIngreso> obtenerVehiculosParqueados();
 	
 	/**
 	 * Permite registrar el ingreso de un vehiculo
