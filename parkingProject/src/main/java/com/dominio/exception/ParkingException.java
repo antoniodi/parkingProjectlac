@@ -1,4 +1,4 @@
-package dominio.exception;
+package com.dominio.exception;
 
 /**
  * 

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package dominio;
+package com.dominio;
 
 import java.math.BigDecimal;
 import java.time.DayOfWeek;
@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 import org.springframework.stereotype.Component;
 
-import dominio.exception.ParkingException;
+import com.dominio.exception.ParkingException;
 
 /**
  * @author luis.cortes

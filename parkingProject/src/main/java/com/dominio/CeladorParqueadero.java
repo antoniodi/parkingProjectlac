@@ -1,7 +1,7 @@
 /**
  * 
  */
-package dominio;
+package com.dominio;
 
 import java.math.BigDecimal;
 import java.time.Duration;
@@ -9,9 +9,9 @@ import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import dominio.exception.ParkingException;
-import services.AdmonTarifa;
-import services.RegistroIngreso;
+import com.dao.services.TarifaServices;
+import com.dao.services.ParkingServices;
+import com.dominio.exception.ParkingException;
 
 /**
  * @author luis.cortes
@@ -23,18 +23,17 @@ public class CeladorParqueadero {
 	public static final String EL_VEHICULO_YA_SE_ENCUENTRA_ESTACIONADO = "El vehiculo ya se encuentra estacionado.";
 
 	private Parqueadero parqueadero;
-	private RegistroIngreso registroIngreso;
-	private AdmonTarifa admonTarifa;
+	private ParkingServices parkingServices;	
 	
 	/**
 	 * 
 	 * @param parqueadero
-	 * @param registroIngreso
+	 * @param parkingServices
 	 */
-	public CeladorParqueadero(Parqueadero parqueadero, RegistroIngreso registroIngreso, AdmonTarifa admonTarifa) {
+	public CeladorParqueadero(Parqueadero parqueadero, ParkingServices parkingServices) {
 	
 		this.parqueadero = parqueadero;
-		this.registroIngreso = registroIngreso;
+		this.parkingServices = parkingServices;
 	}
 	
 	/**
@@ -46,11 +45,11 @@ public class CeladorParqueadero {
 		
 		elVehiculoEstaParqueado(vehiculo.getPlaca());
 		
-		parqueadero.validarAutorizacion(vehiculo.getPlaca(), fechaIngreso);
+		this.parqueadero.validarAutorizacion(vehiculo.getPlaca(), fechaIngreso);
 		
 		comprobarDisponibilidadDeCupos(vehiculo.getTipoDeVehiculo());
 		
-		registroIngreso.registrarIngresoVehiculo( new RegistroDeIngreso(vehiculo, fechaIngreso));		
+		this.parkingServices.registrarIngresoVehiculo( new RegistroDeIngreso(vehiculo, fechaIngreso));		
 			
 	}
 	
@@ -60,11 +59,11 @@ public class CeladorParqueadero {
 	 */
 	public void atenderSalidaDelVehiculo(String placa, LocalDateTime fechaSalida) {
 		
-		RegistroDeIngreso registroDeIngreso = registroIngreso.obtenerRegistroDeIngresoPorPlaca(placa);
+		RegistroDeIngreso registroDeIngreso = this.parkingServices.obtenerRegistroDeIngresoPorPlaca(placa);
 			
 		TicketDePago ticketDePago = generarTicketDePago(registroDeIngreso, fechaSalida);
 		
-		this.registroIngreso.registrarSalidaVehiculo(ticketDePago);
+		this.parkingServices.registrarSalidaVehiculo(ticketDePago);
 		
 	}	
 	
@@ -81,12 +80,11 @@ public class CeladorParqueadero {
 			numeroDeHorasDeParqueo = 0;
 		}
 		
-		Tarifa tarifa = admonTarifa.obtenerTrarifaPorTipoDeVehiculo(registroDeIngreso.getVehiculo().getTipoDeVehiculo());
+		Tarifa tarifa = this.parkingServices.obtenerTrarifaPorTipoDeVehiculo(registroDeIngreso.getVehiculo().getTipoDeVehiculo());
 		
 		total = total.add(tarifa.getValorDia().multiply(new BigDecimal(numeroDeDiasDeParqueo)));
 		total = total.add(tarifa.getValorHora().multiply(new BigDecimal(numeroDeHorasDeParqueo)));
-		total = total.add(parqueadero.obtenerRecargos(registroDeIngreso.getVehiculo()));
-		
+		total = total.add(this.parqueadero.obtenerRecargos(registroDeIngreso.getVehiculo()));		
 		
 		return new TicketDePago(registroDeIngreso.getVehiculo(), 
 								fechaSalida,
@@ -101,7 +99,7 @@ public class CeladorParqueadero {
 		
 		int numeroDeCuposDisponibles;
 		
-		numeroDeCuposDisponibles = parqueadero.getNumeroDeCupos(tipoDeVehiculo) - registroIngreso.obtenerNumeroVehiculosParqueados(tipoDeVehiculo);
+		numeroDeCuposDisponibles = this.parqueadero.getNumeroDeCupos(tipoDeVehiculo) - this.parkingServices.obtenerNumeroVehiculosParqueados(tipoDeVehiculo);
 		
 		if ( numeroDeCuposDisponibles < 1 ) {
 			throw new ParkingException(NO_HAY_CUPOS_DISPONIBLES);
@@ -110,7 +108,7 @@ public class CeladorParqueadero {
 	
 	public boolean elVehiculoEstaParqueado(String placa) {
 		
-		if (registroIngreso.obtenerRegistroDeIngresoPorPlaca(placa) != null) {
+		if (this.parkingServices.obtenerRegistroDeIngresoPorPlaca(placa) != null) {
 			throw new ParkingException(EL_VEHICULO_YA_SE_ENCUENTRA_ESTACIONADO);
 		}
 		

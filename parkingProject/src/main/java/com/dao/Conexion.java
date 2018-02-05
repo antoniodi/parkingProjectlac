@@ -1,13 +1,13 @@
 /**
  * 
  */
-package dao;
+package com.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-import dominio.exception.DBException;
+import com.dao.exception.DAOException;
 
 /**
  * @author luis.cortes
@@ -32,9 +32,9 @@ public class Conexion {
 			Class.forName(JDBC_DRIVER);
 			
 		} catch (ClassNotFoundException e) {
-			throw new DBException(e.getMessage());
+			throw new DAOException(e.getMessage());
 		} catch (SQLException e) {
-			throw new DBException(e.getMessage());
+			throw new DAOException(e.getMessage());
 		}
 		
 	}
@@ -46,7 +46,7 @@ public class Conexion {
 				this.conexion.close();
 			}
 		} catch (SQLException e) {
-			throw new DBException(e.getMessage());
+			throw new DAOException(e.getMessage());
 		}
 		
 	}

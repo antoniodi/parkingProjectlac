@@ -7,10 +7,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import dominio.TipoDeVehiculo;
-import dominio.Vehiculo;
+import com.dao.services.ParkingServices;
+import com.dao.services.ParkingServicesImpl;
+import com.dominio.CeladorParqueadero;
+import com.dominio.Parqueadero;
+import com.dominio.RegistroDeIngreso;
+import com.dominio.Tarifa;
+import com.dominio.TipoDeVehiculo;
+import com.dominio.Vehiculo;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
+
+import java.util.List;
 
 import org.springframework.http.MediaType;
 
@@ -21,11 +29,26 @@ import org.springframework.http.MediaType;
 @RestController
 public class ConsultarVehiculos {
 	
+	private CeladorParqueadero celadorParqueadero;
+	
 	@RequestMapping(path = "/vehiculosParqueados", method = GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody Vehiculo consultarVehiculosParqueados() {
-		Vehiculo v = new Vehiculo(TipoDeVehiculo.CARRO, "LIV-775", 300);
-		return v; 
+	public List<RegistroDeIngreso> consultarVehiculosParqueados() {
 		
+		ParkingServices parkingServices = new ParkingServicesImpl();
+		
+		celadorParqueadero = new CeladorParqueadero(new Parqueadero(), new ParkingServicesImpl());
+		
+		return parkingServices.obtenerVehiculosParqueados(); 
+	}
+
+	@RequestMapping(path = "/Tarifa", method = GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public Tarifa consultarTarifa() {
+		
+		ParkingServices parkingServices = new ParkingServicesImpl();
+		
+		celadorParqueadero = new CeladorParqueadero(new Parqueadero(), new ParkingServicesImpl());
+		
+		return parkingServices.obtenerTrarifaPorTipoDeVehiculo(TipoDeVehiculo.CARRO); 
 	}
 
 }

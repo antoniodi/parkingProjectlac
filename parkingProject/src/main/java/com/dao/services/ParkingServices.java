@@ -1,15 +1,13 @@
-package services;
+package com.dao.services;
 
 import java.util.List;
 
-import dominio.RegistroDeIngreso;
-import dominio.Tarifa;
-import dominio.TicketDePago;
-import dominio.TipoDeVehiculo;
-import dominio.Vehiculo;
-import interfaces.DAOTarifa;
+import com.dominio.RegistroDeIngreso;
+import com.dominio.Tarifa;
+import com.dominio.TicketDePago;
+import com.dominio.TipoDeVehiculo;
 
-public interface RegistroIngreso extends DAOTarifa {
+public interface ParkingServices {
 	
 	/**
 	 * Permite obtener el numero de vehiculos estacionados de un tipo especifico

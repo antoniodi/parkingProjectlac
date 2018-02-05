@@ -12,10 +12,11 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import dominio.Parqueadero;
-import dominio.TipoDeVehiculo;
-import dominio.Vehiculo;
-import dominio.exception.ParkingException;
+import com.dominio.Parqueadero;
+import com.dominio.TipoDeVehiculo;
+import com.dominio.Vehiculo;
+import com.dominio.exception.ParkingException;
+
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import testdatabuilder.VehiculoTestDataBuilder;

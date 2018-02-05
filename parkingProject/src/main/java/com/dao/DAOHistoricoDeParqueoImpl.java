@@ -1,26 +1,26 @@
 /**
  * 
  */
-package dao;
+package com.dao;
 
 import java.sql.PreparedStatement;
 import java.sql.Timestamp;
 import java.util.List;
 
-import dominio.RegistroDeIngreso;
-import dominio.exception.DBException;
-import interfaces.DAORegistrarIngreso;
+import com.dao.exception.DAOException;
+import com.dao.interfaces.DAOHistoricoDeParqueo;
+import com.dominio.RegistroDeIngreso;
 
 /**
  * @author luis.cortes
  *
  */
-public class DAORegistroDelIngresoImpl extends Conexion implements DAORegistrarIngreso {
+public class DAOHistoricoDeParqueoImpl extends Conexion implements DAOHistoricoDeParqueo {
 	
 	private static final String VEHICULO_ESTA_EN_EL_PARQUEDERO = "N";
 
 	@Override
-	public void registrarIngreso(RegistroDeIngreso registroDelIngreso) throws Exception {		
+	public void registrarIngreso(RegistroDeIngreso registroDelIngreso) {		
 		
 		try {
 			this.conectar(); 

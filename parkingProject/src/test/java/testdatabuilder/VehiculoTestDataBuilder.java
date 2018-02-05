@@ -3,8 +3,8 @@
  */
 package testdatabuilder;
 
-import dominio.TipoDeVehiculo;
-import dominio.Vehiculo;
+import com.dominio.TipoDeVehiculo;
+import com.dominio.Vehiculo;
 
 /**
  * @author luis.cortes

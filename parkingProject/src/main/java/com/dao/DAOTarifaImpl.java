@@ -1,18 +1,16 @@
 /**
  * 
  */
-package dao;
-
-import static org.assertj.core.api.Assertions.catchThrowable;
+package com.dao;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import dominio.Tarifa;
-import dominio.TipoDeVehiculo;
-import dominio.exception.DBException;
-import interfaces.DAOTarifa;
+import com.dao.exception.DAOException;
+import com.dao.interfaces.DAOTarifa;
+import com.dominio.Tarifa;
+import com.dominio.TipoDeVehiculo;
 
 /**
  * @author luis.cortes
@@ -44,7 +42,7 @@ public class DAOTarifaImpl extends Conexion implements DAOTarifa {
 			return tarifa;
 			
 		} catch (SQLException e) {
-			throw new DBException(e.getMessage());
+			throw new DAOException(e.getMessage());
 		} finally {
 			this.cerrarConexion();
 		}

@@ -16,18 +16,18 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 
-import dominio.CeladorParqueadero;
-import dominio.Parqueadero;
-import dominio.RegistroDeIngreso;
-import dominio.Tarifa;
-import dominio.TicketDePago;
-import dominio.TipoDeVehiculo;
-import dominio.Vehiculo;
-import dominio.exception.ParkingException;
+import com.dao.services.ParkingServices;
+import com.dominio.CeladorParqueadero;
+import com.dominio.Parqueadero;
+import com.dominio.RegistroDeIngreso;
+import com.dominio.Tarifa;
+import com.dominio.TicketDePago;
+import com.dominio.TipoDeVehiculo;
+import com.dominio.Vehiculo;
+import com.dominio.exception.ParkingException;
+
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
-import services.AdmonTarifa;
-import services.RegistroIngreso;
 import testdatabuilder.VehiculoTestDataBuilder;
 
 /**
@@ -41,19 +41,19 @@ public class CeladorParqueaderoTest {
 	public void vehiculoSeEncuentraParqueado() {
 		//Arrange
 		Parqueadero parqueadero = mock(Parqueadero.class);
-		RegistroIngreso registroIngreso = mock(RegistroIngreso.class);
+		ParkingServices parkingServices = mock(ParkingServices.class);
 		RegistroDeIngreso registroDeIngreso = mock(RegistroDeIngreso.class);
 		String placa = "ALV-77D";
 		
-		when(registroIngreso.obtenerRegistroDeIngresoPorPlaca(Mockito.anyString())).thenReturn(registroDeIngreso);
+		when(parkingServices.obtenerRegistroDeIngresoPorPlaca(Mockito.anyString())).thenReturn(registroDeIngreso);
 				
-		//CeladorParqueadero celadorParqueadero = new CeladorParqueadero(parqueadero, registroIngreso);		
+		CeladorParqueadero celadorParqueadero = new CeladorParqueadero(parqueadero, parkingServices);		
 		
 		// Act
 		try {
 		
 			
-			//celadorParqueadero.elVehiculoEstaParqueado(placa);
+			celadorParqueadero.elVehiculoEstaParqueado(placa);
 			fail();
 			
 		} catch (ParkingException e) {
@@ -68,12 +68,12 @@ public class CeladorParqueaderoTest {
 	public void vehiculoNoSeEncuentraParqueado() {
 		//Arrange
 		Parqueadero parqueadero = mock(Parqueadero.class);
-		RegistroIngreso registroIngreso = mock(RegistroIngreso.class);
+		ParkingServices parkingServices = mock(ParkingServices.class);
 		String placa = "ALV-77D";
 		
-		when(registroIngreso.obtenerRegistroDeIngresoPorPlaca(Mockito.anyString())).thenReturn(null);
+		when(parkingServices.obtenerRegistroDeIngresoPorPlaca(Mockito.anyString())).thenReturn(null);
 				
-		CeladorParqueadero celadorParqueadero = new CeladorParqueadero(parqueadero, registroIngreso);		
+		CeladorParqueadero celadorParqueadero = new CeladorParqueadero(parqueadero, parkingServices);		
 		
 		// Act
 		try {
@@ -90,12 +90,12 @@ public class CeladorParqueaderoTest {
 	public void hayCuposDisponibles() {
 		//Arrange
 		Parqueadero parqueadero = mock(Parqueadero.class);
-		RegistroIngreso registroIngreso = mock(RegistroIngreso.class);
+		ParkingServices parkingServices = mock(ParkingServices.class);
 		
 		when(parqueadero.getNumeroDeCupos(TipoDeVehiculo.CARRO)).thenReturn(20);
-		when(registroIngreso.obtenerNumeroVehiculosParqueados(TipoDeVehiculo.CARRO)).thenReturn(19);
+		when(parkingServices.obtenerNumeroVehiculosParqueados(TipoDeVehiculo.CARRO)).thenReturn(19);
 				
-		CeladorParqueadero celadorParqueadero = new CeladorParqueadero(parqueadero, registroIngreso);
+		CeladorParqueadero celadorParqueadero = new CeladorParqueadero(parqueadero, parkingServices);
 		
 		// Act
 		try {
@@ -113,12 +113,12 @@ public class CeladorParqueaderoTest {
 	public void noHayCuposDisponibles() {
 		//Arrange
 		Parqueadero parqueadero = mock(Parqueadero.class);
-		RegistroIngreso registroIngreso = mock(RegistroIngreso.class);
+		ParkingServices parkingServices = mock(ParkingServices.class);
 		
 		when(parqueadero.getNumeroDeCupos(TipoDeVehiculo.CARRO)).thenReturn(20);
-		when(registroIngreso.obtenerNumeroVehiculosParqueados(TipoDeVehiculo.CARRO)).thenReturn(20);
+		when(parkingServices.obtenerNumeroVehiculosParqueados(TipoDeVehiculo.CARRO)).thenReturn(20);
 				
-		CeladorParqueadero celadorParqueadero = new CeladorParqueadero(parqueadero, registroIngreso);		
+		CeladorParqueadero celadorParqueadero = new CeladorParqueadero(parqueadero, parkingServices);		
 		
 		// Act
 		try {
@@ -136,7 +136,7 @@ public class CeladorParqueaderoTest {
 	public void registrarVehiculoConCuposDisponibles() {
 		//Arrange
 		Parqueadero parqueadero = mock(Parqueadero.class);
-		RegistroIngreso registroIngreso = mock(RegistroIngreso.class);
+		ParkingServices parkingServices = mock(ParkingServices.class);
 
 		LocalDateTime fechaIngresoMartes = LocalDateTime.of(2018, 1, 30, 10, 20);
 
@@ -145,13 +145,12 @@ public class CeladorParqueaderoTest {
 				conTipoDeVehiculo(TipoDeVehiculo.CARRO);
 		
 		Vehiculo vehiculo = vehiculoTestDataBuilder.buildVehiculo(); 
-		RegistroDeIngreso registroDeIngreso = new RegistroDeIngreso(vehiculo, fechaIngresoMartes);
 		
 		when(parqueadero.getNumeroDeCupos(TipoDeVehiculo.CARRO)).thenReturn(20);
-		when(registroIngreso.obtenerNumeroVehiculosParqueados(TipoDeVehiculo.CARRO)).thenReturn(19);
-		when(registroIngreso.obtenerRegistroDeIngresoPorPlaca(vehiculo.getPlaca())).thenReturn(null);
+		when(parkingServices.obtenerNumeroVehiculosParqueados(TipoDeVehiculo.CARRO)).thenReturn(19);
+		when(parkingServices.obtenerRegistroDeIngresoPorPlaca(vehiculo.getPlaca())).thenReturn(null);
 				
-		CeladorParqueadero celadorParqueadero = new CeladorParqueadero(parqueadero, registroIngreso);		
+		CeladorParqueadero celadorParqueadero = new CeladorParqueadero(parqueadero, parkingServices);		
 		
 		//Act
 		celadorParqueadero.atenderSolicitudDeIngreso(vehiculo, fechaIngresoMartes);
@@ -166,7 +165,7 @@ public class CeladorParqueaderoTest {
 	public void registrarVehiculoSinCuposDisponibles() {
 		//Arrange
 		Parqueadero parqueadero = mock(Parqueadero.class);
-		RegistroIngreso registroIngreso = mock(RegistroIngreso.class);
+		ParkingServices parkingServices = mock(ParkingServices.class);
 
 		LocalDateTime fechaIngresoMartes = LocalDateTime.of(2018, 1, 29, 10, 20);
 
@@ -177,10 +176,10 @@ public class CeladorParqueaderoTest {
 		Vehiculo vehiculo = vehiculoTestDataBuilder.buildVehiculo();	
 		
 		when(parqueadero.getNumeroDeCupos(TipoDeVehiculo.CARRO)).thenReturn(20);
-		when(registroIngreso.obtenerNumeroVehiculosParqueados(TipoDeVehiculo.CARRO)).thenReturn(20);
-		when(registroIngreso.obtenerRegistroDeIngresoPorPlaca(vehiculo.getPlaca())).thenReturn(null);
+		when(parkingServices.obtenerNumeroVehiculosParqueados(TipoDeVehiculo.CARRO)).thenReturn(20);
+		when(parkingServices.obtenerRegistroDeIngresoPorPlaca(vehiculo.getPlaca())).thenReturn(null);
 				
-		CeladorParqueadero celadorParqueadero = new CeladorParqueadero(parqueadero, registroIngreso);		
+		CeladorParqueadero celadorParqueadero = new CeladorParqueadero(parqueadero, parkingServices);		
 		
 		try {
 			//Act
@@ -197,7 +196,7 @@ public class CeladorParqueaderoTest {
 	public void registrarVehiculoAutorizado() {
 		//Arrange
 		Parqueadero parqueadero = mock(Parqueadero.class);
-		RegistroIngreso registroIngreso = mock(RegistroIngreso.class);
+		ParkingServices parkingServices = mock(ParkingServices.class);
 
 		LocalDateTime fechaIngresoMartes = LocalDateTime.of(2018, 1, 29, 10, 20);
 
@@ -210,10 +209,10 @@ public class CeladorParqueaderoTest {
 		
 		doNothing().when(parqueadero).validarAutorizacion(vehiculo.getPlaca(), fechaIngresoMartes);
 		when(parqueadero.getNumeroDeCupos(TipoDeVehiculo.CARRO)).thenReturn(20);
-		when(registroIngreso.obtenerNumeroVehiculosParqueados(TipoDeVehiculo.CARRO)).thenReturn(19);
-		when(registroIngreso.obtenerRegistroDeIngresoPorPlaca(vehiculo.getPlaca())).thenReturn(registroDeIngreso);
+		when(parkingServices.obtenerNumeroVehiculosParqueados(TipoDeVehiculo.CARRO)).thenReturn(19);
+		when(parkingServices.obtenerRegistroDeIngresoPorPlaca(vehiculo.getPlaca())).thenReturn(registroDeIngreso);
 		
-		CeladorParqueadero celadorParqueadero = new CeladorParqueadero(parqueadero, registroIngreso);		
+		CeladorParqueadero celadorParqueadero = new CeladorParqueadero(parqueadero, parkingServices);		
 		
 		try {
 			//Act
@@ -229,7 +228,7 @@ public class CeladorParqueaderoTest {
 	public void registrarVehiculoNoAutorizado() {
 		// Arrange
 		Parqueadero parqueadero = mock(Parqueadero.class);
-		RegistroIngreso registroIngreso = mock(RegistroIngreso.class);
+		ParkingServices parkingServices = mock(ParkingServices.class);
 
 		LocalDateTime fechaIngresoLunes = LocalDateTime.of(2018, 1, 30, 10, 20);
 
@@ -238,15 +237,14 @@ public class CeladorParqueaderoTest {
 				conTipoDeVehiculo(TipoDeVehiculo.CARRO);
 		
 		Vehiculo vehiculo = vehiculoTestDataBuilder.buildVehiculo();
-		RegistroDeIngreso registroDeIngreso = new RegistroDeIngreso(vehiculo, fechaIngresoLunes);
 		
 		Mockito.doThrow(new ParkingException(Parqueadero.VEHICULO_NO_AUTORIZADO)).
 				when(parqueadero).validarAutorizacion(vehiculo.getPlaca(), fechaIngresoLunes);
 		when(parqueadero.getNumeroDeCupos(TipoDeVehiculo.CARRO)).thenReturn(20);
-		when(registroIngreso.obtenerNumeroVehiculosParqueados(TipoDeVehiculo.CARRO)).thenReturn(19);
-		when(registroIngreso.obtenerRegistroDeIngresoPorPlaca(vehiculo.getPlaca())).thenReturn(null);			
+		when(parkingServices.obtenerNumeroVehiculosParqueados(TipoDeVehiculo.CARRO)).thenReturn(19);
+		when(parkingServices.obtenerRegistroDeIngresoPorPlaca(vehiculo.getPlaca())).thenReturn(null);			
 				
-		CeladorParqueadero celadorParqueadero = new CeladorParqueadero(parqueadero, registroIngreso);
+		CeladorParqueadero celadorParqueadero = new CeladorParqueadero(parqueadero, parkingServices);
 				
 		try {
 			// Act
@@ -307,14 +305,13 @@ public class CeladorParqueaderoTest {
 			Tarifa tarifa,BigDecimal expectedValue) throws Exception {
 		// Arrange
 		Parqueadero parqueadero = mock(Parqueadero.class);
-		RegistroIngreso registroIngreso = mock(RegistroIngreso.class);
-		AdmonTarifa admonTarifa = mock(AdmonTarifa.class);
+		ParkingServices parkingServices = mock(ParkingServices.class);
 		
 		when(parqueadero.obtenerRecargos(registroDeIngreso.getVehiculo())).thenReturn(recargo);
-		when(registroIngreso.obtenerTrarifaPorTipoDeVehiculo(registroDeIngreso.getVehiculo().getTipoDeVehiculo())).
+		when(parkingServices.obtenerTrarifaPorTipoDeVehiculo(registroDeIngreso.getVehiculo().getTipoDeVehiculo())).
 				thenReturn(tarifa);			
 				
-		CeladorParqueadero celadorParqueadero = new CeladorParqueadero(parqueadero, registroIngreso);			
+		CeladorParqueadero celadorParqueadero = new CeladorParqueadero(parqueadero, parkingServices);			
 				
 		// Act
 		TicketDePago ticketDePago = celadorParqueadero.generarTicketDePago(registroDeIngreso, fechaSalida);

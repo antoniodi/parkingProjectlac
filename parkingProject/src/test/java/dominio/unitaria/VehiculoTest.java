@@ -7,8 +7,9 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import dominio.TipoDeVehiculo;
-import dominio.Vehiculo;
+import com.dominio.TipoDeVehiculo;
+import com.dominio.Vehiculo;
+
 import testdatabuilder.VehiculoTestDataBuilder;
 
 /**
