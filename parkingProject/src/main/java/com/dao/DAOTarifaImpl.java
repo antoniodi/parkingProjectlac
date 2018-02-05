@@ -31,7 +31,7 @@ public class DAOTarifaImpl extends Conexion implements DAOTarifa {
 			PreparedStatement st = this.conexion.prepareStatement("select valor_dia, valor_hora from tarifa where "
 					+ "tipo_de_vehiculo_id = ?");
 				
-			st.setString(1, tipoDeVehiculo.getAbreviatura());
+			st.setString(1, tipoDeVehiculo.toString());
 			resultado = st.executeQuery();
 			
 			
