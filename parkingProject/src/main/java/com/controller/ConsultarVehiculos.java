@@ -20,6 +20,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 
 /**
@@ -31,24 +32,31 @@ public class ConsultarVehiculos {
 	
 	private CeladorParqueadero celadorParqueadero;
 	
+	@Autowired
+	ParkingServices parkingServices;
+		
 	@RequestMapping(path = "/vehiculosParqueados", method = GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<RegistroDeIngreso> consultarVehiculosParqueados() {
-		
-		ParkingServices parkingServices = new ParkingServicesImpl();
-		
-		celadorParqueadero = new CeladorParqueadero(new Parqueadero(), new ParkingServicesImpl());
 		
 		return parkingServices.obtenerVehiculosParqueados(); 
 	}
 
-	@RequestMapping(path = "/Tarifa", method = GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(path = "/tarifa", method = GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public Tarifa consultarTarifa() {
 		
-		ParkingServices parkingServices = new ParkingServicesImpl();
-		
-		celadorParqueadero = new CeladorParqueadero(new Parqueadero(), new ParkingServicesImpl());
-		
 		return parkingServices.obtenerTrarifaPorTipoDeVehiculo(TipoDeVehiculo.CARRO); 
+	}
+	
+	@RequestMapping(path = "/vehiculoPorPlaca", method = GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public RegistroDeIngreso consultarVehiculoPorPlaca() {
+		
+		return parkingServices.obtenerRegistroDeIngresoPorPlaca("LIV-778"); 
+	}
+	
+	@RequestMapping(path = "/numeroDeVehiculoPorPlaca", method = GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public int consultarNumeroDeCupos() {
+		
+		return parkingServices.obtenerNumeroVehiculosParqueados(TipoDeVehiculo.CARRO); 
 	}
 
 }

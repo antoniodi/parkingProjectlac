@@ -23,20 +23,16 @@ public class Conexion {
     
     // Credenciales base de datos
 	private static final String USER = "root";
-	private static final String PASS= "root";	
+	private static final String PASS= "root";
 	
 	public void conectar() {
 		
 		try {
 			this.conexion = DriverManager.getConnection(BD_URL, USER, PASS);
-			Class.forName(JDBC_DRIVER);
-			
-		} catch (ClassNotFoundException e) {
-			throw new DAOException(e.getMessage());
-		} catch (SQLException e) {
+			Class.forName(JDBC_DRIVER);			
+		} catch (ClassNotFoundException | SQLException e) {
 			throw new DAOException(e.getMessage());
 		}
-		
 	}
 	
 	public void cerrarConexion () {
@@ -50,5 +46,5 @@ public class Conexion {
 		}
 		
 	}
-
+	
 }

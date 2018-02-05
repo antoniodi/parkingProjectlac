@@ -7,8 +7,6 @@ public class RegistroDeIngreso {
 	private Vehiculo vehiculo;
 	private LocalDateTime fechaDeIngreso;
 	
-	
-	
 	/**
 	 * @param vehiculo
 	 * @param fechaDeIngresio
@@ -27,7 +25,7 @@ public class RegistroDeIngreso {
 	/**
 	 * @return the fechaDeIngresio
 	 */
-	public LocalDateTime getFechaDeIngresio() {
+	public LocalDateTime getFechaDeIngreso() {
 		return fechaDeIngreso;
 	}
 	

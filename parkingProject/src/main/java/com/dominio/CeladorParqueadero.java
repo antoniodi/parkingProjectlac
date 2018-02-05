@@ -71,7 +71,7 @@ public class CeladorParqueadero {
 		
 		BigDecimal total = new BigDecimal(0);
 		
-		Duration duracion = Duration.between(registroDeIngreso.getFechaDeIngresio(), fechaSalida);
+		Duration duracion = Duration.between(registroDeIngreso.getFechaDeIngreso(), fechaSalida);
 		long numeroDeDiasDeParqueo = duracion.toDays();
 		long numeroDeHorasDeParqueo = duracion.toHours() - duracion.toDays()*Parqueadero.DURACION_MAXIMA_DIA_DE_PARQUEO ;
 		

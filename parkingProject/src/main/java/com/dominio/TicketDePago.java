@@ -19,8 +19,6 @@ public class TicketDePago {
 	/**
 	 * @param vehiculo
 	 * @param fechaSalida
-	 * @param horasDeParqueo
-	 * @param diasDeParqueo
 	 * @param total
 	 */
 	public TicketDePago(Vehiculo vehiculo, LocalDateTime fechaSalida, BigDecimal total) {

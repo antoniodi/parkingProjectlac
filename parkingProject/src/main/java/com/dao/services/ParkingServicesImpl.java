@@ -7,6 +7,8 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.dao.Conexion;
 import com.dao.exception.DAOException;
 import com.dominio.RegistroDeIngreso;
@@ -15,6 +17,7 @@ import com.dominio.TicketDePago;
 import com.dominio.TipoDeVehiculo;
 import com.dominio.Vehiculo;
 
+@Service
 public class ParkingServicesImpl extends Conexion implements ParkingServices {
 	
 	private static final String VEHICULO_ESTA_EN_EL_PARQUEDERO = "S";
@@ -33,7 +36,7 @@ public class ParkingServicesImpl extends Conexion implements ParkingServices {
 			PreparedStatement st = this.conexion.prepareStatement("select count('X') from historico_de_parqueo where tipo_de_vehiculo_id = ? and parqueado = ? ");
 			
 			st.setString(1, tipoDeVehiculo.toString());
-			st.setString(1, VEHICULO_ESTA_EN_EL_PARQUEDERO);
+			st.setString(2, VEHICULO_ESTA_EN_EL_PARQUEDERO);
 			resultado = st.executeQuery();
 			
 			
@@ -97,8 +100,9 @@ public class ParkingServicesImpl extends Conexion implements ParkingServices {
 				st.setString(1, registroDeIngreso.getVehiculo().getTipoDeVehiculo().toString());
 				st.setString(2, registroDeIngreso.getVehiculo().getPlaca());
 				st.setInt(3, registroDeIngreso.getVehiculo().getCilindraje());
-				st.setTimestamp(4, Timestamp.valueOf(registroDeIngreso.getFechaDeIngresio()));
+				st.setTimestamp(4, Timestamp.valueOf(registroDeIngreso.getFechaDeIngreso()));
 				st.executeUpdate();
+				
 			}
 			
 		} catch (SQLException e) {
@@ -174,8 +178,28 @@ public class ParkingServicesImpl extends Conexion implements ParkingServices {
 
 	@Override
 	public void registrarSalidaVehiculo(TicketDePago tikectDePago) {
-		// TODO Auto-generated method stub
 		
+		try {
+			
+			this.conectar(); 
+			
+			try ( PreparedStatement st = this.conexion.prepareStatement(" update historico_de_parqueo set fecha_salida = ?, "
+					+ " total = ?, parqueado = ? where placa = ? and tipo_de_vehiculo_id = ? ") ) {
+				
+				st.setTimestamp(1, Timestamp.valueOf(tikectDePago.getFechaSalida()));				
+				st.setBigDecimal(2, tikectDePago.getTotal());
+				st.setString(3, VEHICULO_NO_ESTA_EN_EL_PARQUEDERO);
+				st.setString(4, tikectDePago.getVehiculo().getPlaca());
+				st.setString(5, tikectDePago.getVehiculo().getTipoDeVehiculo().toString());
+				st.executeUpdate();
+				
+			}
+			
+		} catch (SQLException e) {
+			throw new DAOException(e.getMessage());
+		} finally {
+			this.cerrarConexion();
+		}
 	}
 
 

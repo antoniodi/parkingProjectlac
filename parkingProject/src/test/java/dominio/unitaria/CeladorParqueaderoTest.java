@@ -51,8 +51,7 @@ public class CeladorParqueaderoTest {
 		
 		// Act
 		try {
-		
-			
+
 			celadorParqueadero.elVehiculoEstaParqueado(placa);
 			fail();
 			
@@ -157,8 +156,7 @@ public class CeladorParqueaderoTest {
 					
 		// Assert
 		//Assert.assertEquals(CeladorParqueadero.NO_HAY_CUPOS_DISPONIBLES, e.getMessage());
-		
-			
+	
 	}
 	
 	@Test
