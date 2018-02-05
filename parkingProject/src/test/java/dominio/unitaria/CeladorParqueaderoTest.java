@@ -260,47 +260,47 @@ public class CeladorParqueaderoTest {
 		return new Object[] {
 			new Object[] {new RegistroDeIngreso(new VehiculoTestDataBuilder().conCilindraje(500).buildVehiculo(),
 												LocalDateTime.of(2018, 1, 29, 10, 0)),
-						 LocalDateTime.of(2018, 1, 29, 10, 0),
-						 new BigDecimal("0"),
-						 new Tarifa(new BigDecimal(4000), new BigDecimal(500)),
-						 new BigDecimal("0")},
+						 LocalDateTime.of(2018, 1, 29, 10, 59),
+						 new BigDecimal("0.0000"),
+						 new Tarifa(new BigDecimal("4000.0000"), new BigDecimal("500.0000")),
+						 new BigDecimal("500.0000")},
 			new Object[] {new RegistroDeIngreso(new VehiculoTestDataBuilder().conCilindraje(500).buildVehiculo(),
 										    	LocalDateTime.of(2018, 1, 29, 10, 0)),
-						 LocalDateTime.of(2018, 1, 29, 12, 0), 
-						 new BigDecimal("0"),
-						 new Tarifa(new BigDecimal(4000), new BigDecimal(500)),
-						 new BigDecimal("1000")},
+						 LocalDateTime.of(2018, 1, 29, 11, 59), 
+						 new BigDecimal("0.0000"),
+						 new Tarifa(new BigDecimal("4000.0000"), new BigDecimal("500.0000")),
+						 new BigDecimal("1000.0000")},
 			new Object[] {new RegistroDeIngreso(new VehiculoTestDataBuilder().conCilindraje(650).buildVehiculo(),
 						  						LocalDateTime.of(2018, 1, 29, 10, 0)),
-						 LocalDateTime.of(2018, 1, 29, 20, 0), 
-						 new BigDecimal("2000"),
-						 new Tarifa(new BigDecimal(4000), new BigDecimal(500)),
-						 new BigDecimal("6000")},
+						 LocalDateTime.of(2018, 1, 29, 19, 1), 
+						 new BigDecimal("2000.0000"),
+						 new Tarifa(new BigDecimal("4000.0000"), new BigDecimal("500.0000")),
+						 new BigDecimal("6000.0000")},
 			new Object[] {new RegistroDeIngreso(new VehiculoTestDataBuilder().conCilindraje(501).buildVehiculo(),
 												LocalDateTime.of(2018, 1, 29, 10, 0)),
-						 LocalDateTime.of(2018, 1, 29, 12, 0), 
-						 new BigDecimal("2000"),
-						 new Tarifa(new BigDecimal(4000), new BigDecimal(500)),
-						 new BigDecimal("3000")},
+						 LocalDateTime.of(2018, 1, 29, 11, 1), 
+						 new BigDecimal("2000.0000"),
+						 new Tarifa(new BigDecimal("4000.0000"), new BigDecimal("500.0000")),
+						 new BigDecimal("3000.0000")},
 			new Object[] {new RegistroDeIngreso(new VehiculoTestDataBuilder().conTipoDeVehiculo(TipoDeVehiculo.CARRO).conCilindraje(500).buildVehiculo(),
 						  						LocalDateTime.of(2018, 1, 25, 10, 0)),
-					     LocalDateTime.of(2018, 1, 26, 13, 0),
-					     new BigDecimal("0"),
-					     new Tarifa(new BigDecimal(8000), new BigDecimal(1000)),
-					     new BigDecimal("11000")},
+					     LocalDateTime.of(2018, 1, 26, 12, 59),
+					     new BigDecimal("0.0000"),
+					     new Tarifa(new BigDecimal("8000.0000"), new BigDecimal("1000.0000")),
+					     new BigDecimal("11000.0000")},
 			new Object[] {new RegistroDeIngreso(new VehiculoTestDataBuilder().conTipoDeVehiculo(TipoDeVehiculo.CARRO).conCilindraje(501).buildVehiculo(),
 												LocalDateTime.of(2018, 1, 25, 10, 0)),
-						 LocalDateTime.of(2018, 1, 25, 12, 0),
-						 new BigDecimal("0"),
-						 new Tarifa(new BigDecimal(8000), new BigDecimal(1000)),
-						 new BigDecimal("2000")}
+						 LocalDateTime.of(2018, 1, 25, 11, 1),
+						 new BigDecimal("0.0000"),
+						 new Tarifa(new BigDecimal("8000.0000"), new BigDecimal("1000.0000")),
+						 new BigDecimal("2000.0000")}
 		};
 	}
 
 	@Test
 	@Parameters(method = "parametersToTestGenerarTicketDePago")
 	public void generarTicketDePago(RegistroDeIngreso registroDeIngreso, LocalDateTime fechaSalida, BigDecimal recargo, 
-			Tarifa tarifa,BigDecimal expectedValue) throws Exception {
+			Tarifa tarifa,BigDecimal expectedValue) {
 		// Arrange
 		Parqueadero parqueadero = mock(Parqueadero.class);
 		ParkingServices parkingServices = mock(ParkingServices.class);

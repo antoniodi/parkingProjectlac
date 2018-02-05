@@ -70,21 +70,25 @@ public class CeladorParqueadero {
 	public TicketDePago generarTicketDePago(RegistroDeIngreso registroDeIngreso, LocalDateTime fechaSalida) {					
 		
 		BigDecimal total = new BigDecimal(0);
+		long numeroDeHorasDeParqueo = 0;
+		long numeroDeDiasDeParqueo = 0;
 		
-		Duration duracion = Duration.between(registroDeIngreso.getFechaDeIngreso(), fechaSalida);
-		long numeroDeDiasDeParqueo = duracion.toDays();
-		long numeroDeHorasDeParqueo = duracion.toHours() - duracion.toDays()*Parqueadero.DURACION_MAXIMA_DIA_DE_PARQUEO ;
+		Duration duracion = Duration.between(registroDeIngreso.getFechaDeIngreso(), fechaSalida);		
+		
+		numeroDeDiasDeParqueo = duracion.toDays();
+		numeroDeHorasDeParqueo = duracion.toHours() + 1 - duracion.toDays()*Parqueadero.DURACION_MAXIMA_DIA_DE_PARQUEO ;
 		
 		if (numeroDeHorasDeParqueo >= Parqueadero.COBRO_POR_DIAS_DESDE) {
 			numeroDeDiasDeParqueo += 1;
 			numeroDeHorasDeParqueo = 0;
 		}
 		
+		
 		Tarifa tarifa = this.parkingServices.obtenerTrarifaPorTipoDeVehiculo(registroDeIngreso.getVehiculo().getTipoDeVehiculo());
 		
-		total = total.add(tarifa.getValorDia().multiply(new BigDecimal(numeroDeDiasDeParqueo)));
-		total = total.add(tarifa.getValorHora().multiply(new BigDecimal(numeroDeHorasDeParqueo)));
-		total = total.add(this.parqueadero.obtenerRecargos(registroDeIngreso.getVehiculo()));		
+		total = total.add(tarifa.getValorDia().multiply(new BigDecimal(numeroDeDiasDeParqueo))).
+				add(tarifa.getValorHora().multiply(new BigDecimal(numeroDeHorasDeParqueo))).
+				add(this.parqueadero.obtenerRecargos(registroDeIngreso.getVehiculo()));		
 		
 		return new TicketDePago(registroDeIngreso.getVehiculo(), 
 								fechaSalida,

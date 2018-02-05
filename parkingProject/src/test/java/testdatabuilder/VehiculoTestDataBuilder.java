@@ -12,7 +12,7 @@ import com.dominio.Vehiculo;
  */
 public class VehiculoTestDataBuilder {
 	
-	private final TipoDeVehiculo TIPODEVEHICULO = TipoDeVehiculo.CARRO;
+	private final TipoDeVehiculo TIPODEVEHICULO = TipoDeVehiculo.MOTO;
 	private final String PLACA = "LIV-777";
 	private final int CILINDRAJE = 100;
 	
