@@ -20,7 +20,8 @@ import com.dominio.exception.ParkingException;
 public class CeladorParqueadero {
 	
 	public static final String NO_HAY_CUPOS_DISPONIBLES = "No hay cupos disponibles.";
-	public static final String EL_VEHICULO_YA_SE_ENCUENTRA_ESTACIONADO = "El vehiculo ya se encuentra estacionado.";
+	public static final String EL_VEHICULO_YA_SE_ENCUENTRA_PARQUEADO = "El vehiculo ya se encuentra parqueado.";
+	public static final String EL_VEHICULO_NO_SE_ENCUENTRA_PARQUEADO = "El vehiculo no se encuentra parqueado.";
 
 	private Parqueadero parqueadero;
 	private ParkingServices parkingServices;	
@@ -60,6 +61,10 @@ public class CeladorParqueadero {
 	public TicketDePago atenderSalidaDelVehiculo(String placa, LocalDateTime fechaSalida) {
 		
 		RegistroDeIngreso registroDeIngreso = this.parkingServices.obtenerRegistroDeIngresoPorPlaca(placa);
+		
+		if ( registroDeIngreso == null) {
+			throw new ParkingException(EL_VEHICULO_NO_SE_ENCUENTRA_PARQUEADO);
+		}
 			
 		TicketDePago ticketDePago = generarTicketDePago(registroDeIngreso, fechaSalida);
 		
@@ -115,7 +120,7 @@ public class CeladorParqueadero {
 	public boolean elVehiculoEstaParqueado(String placa) {
 		
 		if (this.parkingServices.obtenerRegistroDeIngresoPorPlaca(placa) != null) {
-			throw new ParkingException(EL_VEHICULO_YA_SE_ENCUENTRA_ESTACIONADO);
+			throw new ParkingException(EL_VEHICULO_YA_SE_ENCUENTRA_PARQUEADO);
 		}
 		
 		return false;

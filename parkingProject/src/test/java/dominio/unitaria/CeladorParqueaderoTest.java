@@ -58,7 +58,7 @@ public class CeladorParqueaderoTest {
 		} catch (ParkingException e) {
 			
 			// Assert
-			Assert.assertEquals(CeladorParqueadero.EL_VEHICULO_YA_SE_ENCUENTRA_ESTACIONADO, e.getMessage());
+			Assert.assertEquals(CeladorParqueadero.EL_VEHICULO_YA_SE_ENCUENTRA_PARQUEADO, e.getMessage());
 			
 		}				
 	}	
@@ -81,7 +81,7 @@ public class CeladorParqueaderoTest {
 			
 		} catch (ParkingException e) {
 			// Assert
-			Assert.assertEquals(CeladorParqueadero.EL_VEHICULO_YA_SE_ENCUENTRA_ESTACIONADO, e.getMessage());
+			Assert.assertEquals(CeladorParqueadero.EL_VEHICULO_YA_SE_ENCUENTRA_PARQUEADO, e.getMessage());
 		}				
 	}
 	
