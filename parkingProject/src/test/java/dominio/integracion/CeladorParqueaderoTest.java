@@ -167,19 +167,19 @@ public class CeladorParqueaderoTest {
 			return new Object[] {
 				new Object[] {new RegistroDeIngreso(new VehiculoTestDataBuilder().conCilindraje(500).buildVehiculo(),
 													LocalDateTime.of(2018, 1, 29, 10, 0)),
-							 LocalDateTime.of(2018, 1, 29, 10, 10),
+							 LocalDateTime.of(2018, 1, 29, 10, 59),
 							 new BigDecimal("500.0000")},
 				new Object[] {new RegistroDeIngreso(new VehiculoTestDataBuilder().conCilindraje(500).buildVehiculo(),
 											    	LocalDateTime.of(2018, 1, 29, 10, 0)),
-							 LocalDateTime.of(2018, 1, 29, 11, 20),
+							 LocalDateTime.of(2018, 1, 29, 11, 1),
 							 new BigDecimal("1000.0000")},
 				new Object[] {new RegistroDeIngreso(new VehiculoTestDataBuilder().conCilindraje(650).buildVehiculo(),
 							  						LocalDateTime.of(2018, 1, 29, 10, 0)),
-							 LocalDateTime.of(2018, 1, 29, 20, 0),
+							 LocalDateTime.of(2018, 1, 29, 20, 59),
 							 new BigDecimal("6000.0000")},
 				new Object[] {new RegistroDeIngreso(new VehiculoTestDataBuilder().conCilindraje(501).buildVehiculo(),
 													LocalDateTime.of(2018, 1, 29, 10, 0)),
-							 LocalDateTime.of(2018, 1, 29, 11, 50),
+							 LocalDateTime.of(2018, 1, 29, 11, 1),
 							 new BigDecimal("3000.0000")},
 				new Object[] {new RegistroDeIngreso(new VehiculoTestDataBuilder().conTipoDeVehiculo(TipoDeVehiculo.CARRO).conCilindraje(500).buildVehiculo(),
 							  						LocalDateTime.of(2018, 1, 25, 10, 0)),
@@ -187,7 +187,7 @@ public class CeladorParqueaderoTest {
 						     new BigDecimal("11000.0000")},
 				new Object[] {new RegistroDeIngreso(new VehiculoTestDataBuilder().conTipoDeVehiculo(TipoDeVehiculo.CARRO).conCilindraje(501).buildVehiculo(),
 													LocalDateTime.of(2018, 1, 25, 10, 0)),
-							 LocalDateTime.of(2018, 1, 25, 11, 59),
+							 LocalDateTime.of(2018, 1, 25, 11, 1),
 							 new BigDecimal("2000.0000")}
 			};
 		}
