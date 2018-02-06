@@ -67,7 +67,7 @@ public class ParkingServicesImpl extends Conexion implements ParkingServices {
 			
 			while (resultado.next()) {
 				
-				registroDeIngresos.add(new RegistroDeIngreso(new Vehiculo(Enum.valueOf(TipoDeVehiculo.class, resultado.getString(1)),
+				registroDeIngresos.add(new RegistroDeIngreso(new Vehiculo(resultado.getString(1),
 						resultado.getString(2), resultado.getInt(3)), resultado.getTimestamp(4).toLocalDateTime()));
 									
 			}
@@ -120,7 +120,7 @@ public class ParkingServicesImpl extends Conexion implements ParkingServices {
 				resultado = st.executeQuery();						
 			
 			while (resultado.next()) {
-				registroDeIngreso = new RegistroDeIngreso(new Vehiculo(Enum.valueOf(TipoDeVehiculo.class, resultado.getString(1)),
+				registroDeIngreso = new RegistroDeIngreso(new Vehiculo(resultado.getString(1),
 						resultado.getString(2), resultado.getInt(3)), resultado.getTimestamp(4).toLocalDateTime());					
 			}
 			

@@ -7,6 +7,8 @@ import java.math.BigDecimal;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
+import org.springframework.stereotype.Service;
+
 import com.dao.services.ParkingServices;
 import com.dominio.exception.ParkingException;
 
@@ -14,6 +16,7 @@ import com.dominio.exception.ParkingException;
  * @author luis.cortes
  *
  */
+@Service
 public class CeladorParqueadero {
 	
 	public static final String NO_HAY_CUPOS_DISPONIBLES = "No hay cupos disponibles.";
@@ -54,13 +57,15 @@ public class CeladorParqueadero {
 	 * 
 	 * @param placa
 	 */
-	public void atenderSalidaDelVehiculo(String placa, LocalDateTime fechaSalida) {
+	public TicketDePago atenderSalidaDelVehiculo(String placa, LocalDateTime fechaSalida) {
 		
 		RegistroDeIngreso registroDeIngreso = this.parkingServices.obtenerRegistroDeIngresoPorPlaca(placa);
 			
 		TicketDePago ticketDePago = generarTicketDePago(registroDeIngreso, fechaSalida);
 		
 		this.parkingServices.registrarSalidaVehiculo(ticketDePago);
+		
+		return ticketDePago;
 		
 	}	
 	
