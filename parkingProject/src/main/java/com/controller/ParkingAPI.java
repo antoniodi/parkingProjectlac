@@ -3,6 +3,7 @@
  */
 package com.controller;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,13 +41,15 @@ public class ParkingAPI {
 	
 	@Autowired
 	ParkingServices parkingServices;
-		
+	
+	@CrossOrigin(origins = "http://localhost:4200")	
 	@RequestMapping(path = "/vehiculos-parqueados", method = GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<RegistroDeIngreso> consultarVehiculosParqueados() {
 		
 		return parkingServices.obtenerVehiculosParqueados(); 
 	}
 	
+	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(path = "/registrar-ingresos", method = POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity < String > registrarIngresoVehiculo(@RequestBody Vehiculo vehiculo) {
 		
@@ -55,6 +58,7 @@ public class ParkingAPI {
 			return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 	
+	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(path = "/generar-ticket-pago/{placa}", method = PUT, produces = MediaType.APPLICATION_JSON_VALUE)
 	public TicketDePago registrarSalidaVehiculo(@PathVariable(value="placa", required=true) String placa) {
 		

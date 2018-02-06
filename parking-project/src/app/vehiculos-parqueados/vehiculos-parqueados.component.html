@@ -1,0 +1,10 @@
+<mat-list>
+  <h3 mat-subheader>Vehiculos</h3>
+  <mat-list-item *ngFor = "let data of myData">
+    <mat-icon mat-list-icon>folder</mat-icon>
+    <h4 mat-line>{{data.vehiculo.placa}}</h4>
+    <p mat-line> {{data.fechaDeIngreso.dayOfMonth}}/{{data.fechaDeIngreso.monthValue}}/{{data.fechaDeIngreso.year}} {{data.fechaDeIngreso.hour}}:{{data.fechaDeIngreso.minute}}:{{data.fechaDeIngreso.second}} </p>
+    <p mat-line> {{data.vehiculo.cilindraje}} cc</p>
+
+  </mat-list-item>
+</mat-list>
