@@ -7,9 +7,6 @@ import java.math.BigDecimal;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
-import com.dao.services.TarifaServices;
 import com.dao.services.ParkingServices;
 import com.dominio.exception.ParkingException;
 

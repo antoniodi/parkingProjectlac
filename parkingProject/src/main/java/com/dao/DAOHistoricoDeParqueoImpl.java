@@ -21,8 +21,9 @@ public class DAOHistoricoDeParqueoImpl extends Conexion implements DAOHistoricoD
 		try {
 			this.conectar(); 
 			
-			PreparedStatement st = this.conexion.prepareStatement(" truncate historico_de_parqueo "); 				
-			st.execute();
+			try (PreparedStatement st = this.dBConexion.prepareStatement(" truncate historico_de_parqueo ");) {
+				st.execute();
+			}
 				
 		} catch (SQLException e) {
 			throw new DAOException(e.getMessage());

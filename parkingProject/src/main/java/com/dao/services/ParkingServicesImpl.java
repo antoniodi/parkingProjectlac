@@ -29,16 +29,14 @@ public class ParkingServicesImpl extends Conexion implements ParkingServices {
 		ResultSet resultado;
 		int numeroVehiculosParqueados = 0;
 		
-		try {			
-			
-			this.conectar(); 
-			
-			PreparedStatement st = this.conexion.prepareStatement("select count('X') from historico_de_parqueo where tipo_de_vehiculo_id = ? and parqueado = ? ");
-			
-			st.setString(1, tipoDeVehiculo.toString());
-			st.setString(2, VEHICULO_ESTA_EN_EL_PARQUEDERO);
-			resultado = st.executeQuery();
-			
+		this.conectar(); 
+		
+		try (PreparedStatement st = this.dBConexion.prepareStatement("select count('X') from historico_de_parqueo "
+				+ "where tipo_de_vehiculo_id = ? and parqueado = ? ")){
+				
+				st.setString(1, tipoDeVehiculo.toString());
+				st.setString(2, VEHICULO_ESTA_EN_EL_PARQUEDERO);
+				resultado = st.executeQuery();
 			
 			while (resultado.next()) {
 				numeroVehiculosParqueados = resultado.getInt(1);					
@@ -59,16 +57,13 @@ public class ParkingServicesImpl extends Conexion implements ParkingServices {
 		ResultSet resultado;
 		ArrayList<RegistroDeIngreso> registroDeIngresos = new ArrayList<>();
 		
-		try {
+		this.conectar();
+		
+		try (PreparedStatement st = this.dBConexion.prepareStatement("select tipo_de_vehiculo_id, placa, cilindraje, fecha_ingreso "
+				+ "from historico_de_parqueo where parqueado = ? ")){
 			
-			this.conectar(); 
-			
-			PreparedStatement st = this.conexion.prepareStatement("select tipo_de_vehiculo_id, placa, cilindraje, fecha_ingreso "
-					+ "from historico_de_parqueo where parqueado = ? ");
-
-			st.setString(1, VEHICULO_ESTA_EN_EL_PARQUEDERO);
-			resultado = st.executeQuery();
-			
+				st.setString(1, VEHICULO_ESTA_EN_EL_PARQUEDERO);
+				resultado = st.executeQuery();
 			
 			while (resultado.next()) {
 				
@@ -90,20 +85,16 @@ public class ParkingServicesImpl extends Conexion implements ParkingServices {
 	@Override
 	public void registrarIngresoVehiculo(RegistroDeIngreso registroDeIngreso) {
 		
-		try {
+		this.conectar(); 
+		
+		try ( PreparedStatement st = this.dBConexion.prepareStatement("insert into historico_de_parqueo(tipo_de_vehiculo_id, placa, "
+				+ "cilindraje, fecha_ingreso) values (?,?,?,?)") ) {
 			
-			this.conectar(); 
-			
-			try ( PreparedStatement st = this.conexion.prepareStatement("insert into historico_de_parqueo(tipo_de_vehiculo_id, placa, "
-					+ "cilindraje, fecha_ingreso) values (?,?,?,?)") ) {
-				
 				st.setString(1, registroDeIngreso.getVehiculo().getTipoDeVehiculo().toString());
 				st.setString(2, registroDeIngreso.getVehiculo().getPlaca());
 				st.setInt(3, registroDeIngreso.getVehiculo().getCilindraje());
 				st.setTimestamp(4, Timestamp.valueOf(registroDeIngreso.getFechaDeIngreso()));
 				st.executeUpdate();
-				
-			}
 			
 		} catch (SQLException e) {
 			throw new DAOException(e.getMessage());
@@ -119,17 +110,14 @@ public class ParkingServicesImpl extends Conexion implements ParkingServices {
 		ResultSet resultado;
 		RegistroDeIngreso registroDeIngreso = null;
 		
-		try {
+		this.conectar();
+		
+		try (PreparedStatement st = this.dBConexion.prepareStatement("select tipo_de_vehiculo_id, placa, cilindraje, fecha_ingreso "
+				+ "from historico_de_parqueo where placa = ? and parqueado = ? ")) {
 			
-			this.conectar(); 
-			
-			PreparedStatement st = this.conexion.prepareStatement("select tipo_de_vehiculo_id, placa, cilindraje, fecha_ingreso "
-					+ "from historico_de_parqueo where placa = ? and parqueado = ? ");
-				
-			st.setString(1, placa);
-			st.setString(2, VEHICULO_ESTA_EN_EL_PARQUEDERO);
-			resultado = st.executeQuery();
-			
+				st.setString(1, placa);
+				st.setString(2, VEHICULO_ESTA_EN_EL_PARQUEDERO);
+				resultado = st.executeQuery();						
 			
 			while (resultado.next()) {
 				registroDeIngreso = new RegistroDeIngreso(new Vehiculo(Enum.valueOf(TipoDeVehiculo.class, resultado.getString(1)),
@@ -152,16 +140,14 @@ public class ParkingServicesImpl extends Conexion implements ParkingServices {
 		ResultSet resultado;
 		Tarifa tarifa = null;
 		
-		try {		
+		this.conectar();
+		
+		try (PreparedStatement st = this.dBConexion.prepareStatement("select valor_dia, valor_hora from tarifa "
+				+ " where tipo_de_vehiculo_id = ?")) {
 			
-			this.conectar(); 
 			
-			PreparedStatement st = this.conexion.prepareStatement("select valor_dia, valor_hora from tarifa where "
-					+ "tipo_de_vehiculo_id = ?");
-				
 			st.setString(1, tipoDeVehiculo.toString());
 			resultado = st.executeQuery();
-			
 			
 			while (resultado.next()) {
 				tarifa = new Tarifa(resultado.getBigDecimal(1), resultado.getBigDecimal(2));					
@@ -179,21 +165,17 @@ public class ParkingServicesImpl extends Conexion implements ParkingServices {
 	@Override
 	public void registrarSalidaVehiculo(TicketDePago tikectDePago) {
 		
-		try {
+		this.conectar();
+		
+		try ( PreparedStatement st = this.dBConexion.prepareStatement(" update historico_de_parqueo set fecha_salida = ?, "
+				+ " total = ?, parqueado = ? where placa = ? and tipo_de_vehiculo_id = ? ") ) { 
 			
-			this.conectar(); 
-			
-			try ( PreparedStatement st = this.conexion.prepareStatement(" update historico_de_parqueo set fecha_salida = ?, "
-					+ " total = ?, parqueado = ? where placa = ? and tipo_de_vehiculo_id = ? ") ) {
-				
 				st.setTimestamp(1, Timestamp.valueOf(tikectDePago.getFechaSalida()));				
 				st.setBigDecimal(2, tikectDePago.getTotal());
 				st.setString(3, VEHICULO_NO_ESTA_EN_EL_PARQUEDERO);
 				st.setString(4, tikectDePago.getVehiculo().getPlaca());
 				st.setString(5, tikectDePago.getVehiculo().getTipoDeVehiculo().toString());
 				st.executeUpdate();
-				
-			}
 			
 		} catch (SQLException e) {
 			throw new DAOException(e.getMessage());
@@ -201,6 +183,5 @@ public class ParkingServicesImpl extends Conexion implements ParkingServices {
 			this.cerrarConexion();
 		}
 	}
-
 
 }

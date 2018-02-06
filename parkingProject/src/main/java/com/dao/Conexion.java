@@ -15,7 +15,7 @@ import com.dao.exception.DAOException;
  */
 public class Conexion {
 	
-	protected Connection conexion;
+	protected Connection dBConexion;
 	
 	// JDBC driver nombre y base de datos URL
 	private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver"; 
@@ -28,7 +28,7 @@ public class Conexion {
 	public void conectar() {
 		
 		try {
-			this.conexion = DriverManager.getConnection(BD_URL, USER, PASS);
+			this.dBConexion = DriverManager.getConnection(BD_URL, USER, PASS);
 			Class.forName(JDBC_DRIVER);			
 		} catch (ClassNotFoundException | SQLException e) {
 			throw new DAOException(e.getMessage());
@@ -38,8 +38,8 @@ public class Conexion {
 	public void cerrarConexion () {
 		
 		try {
-			if (this.conexion != null && !this.conexion.isClosed()) {
-				this.conexion.close();
+			if (this.dBConexion != null && !this.dBConexion.isClosed()) {
+				this.dBConexion.close();
 			}
 		} catch (SQLException e) {
 			throw new DAOException(e.getMessage());

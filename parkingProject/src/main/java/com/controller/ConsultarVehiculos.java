@@ -4,17 +4,14 @@
 package com.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dao.services.ParkingServices;
-import com.dao.services.ParkingServicesImpl;
 import com.dominio.CeladorParqueadero;
-import com.dominio.Parqueadero;
 import com.dominio.RegistroDeIngreso;
 import com.dominio.Tarifa;
 import com.dominio.TipoDeVehiculo;
-import com.dominio.Vehiculo;
+
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
@@ -30,7 +27,7 @@ import org.springframework.http.MediaType;
 @RestController
 public class ConsultarVehiculos {
 	
-	private CeladorParqueadero celadorParqueadero;
+//	private CeladorParqueadero celadorParqueadero;
 	
 	@Autowired
 	ParkingServices parkingServices;
