@@ -67,9 +67,9 @@ public class ParkingAPI {
 	
 	@CrossOrigin(origins = "http://localhost:4200")
 	@RequestMapping(path = "/generar-ticket-pago/{placa}", method = PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-	public TicketDePago registrarSalidaVehiculo(@PathVariable(value="placa", required=true) String placa) {
-		
-			return celadorParqueadero.atenderSalidaDelVehiculo(placa, LocalDateTime.now());		
+	public ResponseEntity<TicketDePago> registrarSalidaVehiculo(@PathVariable(value="placa", required=true) String placa) {				
+			
+			return new ResponseEntity<>(celadorParqueadero.atenderSalidaDelVehiculo(placa, LocalDateTime.now()), HttpStatus.ACCEPTED);
 	}
 	
 	

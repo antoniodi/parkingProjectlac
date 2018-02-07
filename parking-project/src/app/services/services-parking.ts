@@ -30,9 +30,10 @@ export class ServicesParking {
                 .catch(this.handleError);
     }
 
-    public registrarSalidaVehiculoPromise(vehiculo: Vehiculo) {
-        const url = 'http://localhost:8080/registrar-ingresos';
-        return this.http.post(url, vehiculo)
+    public generarTicketDePagoPromise(placa: string) {
+        const url = '/generar-ticket-pago/' + placa;
+        const ticketDePago: any = null;
+        return this.http.post(url, ticketDePago)
                 .toPromise()
                 .then(response => response.text() ? response.json() : response.text())
                 .catch(this.handleError);
