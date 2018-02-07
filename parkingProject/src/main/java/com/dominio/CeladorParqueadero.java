@@ -22,6 +22,8 @@ public class CeladorParqueadero {
 	public static final String NO_HAY_CUPOS_DISPONIBLES = "No hay cupos disponibles.";
 	public static final String EL_VEHICULO_YA_SE_ENCUENTRA_PARQUEADO = "El vehiculo ya se encuentra parqueado.";
 	public static final String EL_VEHICULO_NO_SE_ENCUENTRA_PARQUEADO = "El vehiculo no se encuentra parqueado.";
+	public static final String LOS_DATOS_DEL_VEHICULOS_ESTAN_INCOMPLETOS = "Los datos del vehiculo estan incompletos.";
+	
 
 	private Parqueadero parqueadero;
 	private ParkingServices parkingServices;	
@@ -43,6 +45,10 @@ public class CeladorParqueadero {
 	 * @param fechaIngreso
 	 */
 	public void atenderSolicitudDeIngreso(Vehiculo vehiculo, LocalDateTime fechaIngreso) {
+		
+		if (vehiculo.getPlaca() == null || vehiculo.getCilindraje() == 0 || vehiculo.getTipoDeVehiculo() == null) {
+			throw new ParkingException(LOS_DATOS_DEL_VEHICULOS_ESTAN_INCOMPLETOS);
+		}
 		
 		elVehiculoEstaParqueado(vehiculo.getPlaca());
 		

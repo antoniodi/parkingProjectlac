@@ -1,10 +1,16 @@
 <mat-list>
   <h3 mat-subheader>Vehiculos</h3>
   <mat-list-item *ngFor = "let data of myData">
-    <mat-icon mat-list-icon>folder</mat-icon>
+    <mat-icon mat-list-icon> motorcycle </mat-icon>
     <h4 mat-line>{{data.vehiculo.placa}}</h4>
     <p mat-line> {{data.fechaDeIngreso.dayOfMonth}}/{{data.fechaDeIngreso.monthValue}}/{{data.fechaDeIngreso.year}} {{data.fechaDeIngreso.hour}}:{{data.fechaDeIngreso.minute}}:{{data.fechaDeIngreso.second}} </p>
-    <p mat-line> {{data.vehiculo.cilindraje}} cc</p>
-
+    <p mat-line> {{data.vehiculo.cilindraje}} CC</p>
+    <button mat-mini-fab>
+        <mat-icon class="printshop" align="end" (click)="openRegistrarSalida(data.vehiculo.placa, data.vehiculo.tipoDeVehiculo, data.vehiculo.cilindraje)">local_printshop</mat-icon>
+    </button>
   </mat-list-item>
 </mat-list>
+
+<button class="agregar-vehiculo" (click)="openRegistrarIngreso()" mat-fab color="primary">
+  <mat-icon>add</mat-icon>
+</button>

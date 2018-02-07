@@ -16,7 +16,9 @@ import com.dominio.Tarifa;
 import com.dominio.TicketDePago;
 import com.dominio.TipoDeVehiculo;
 import com.dominio.Vehiculo;
+import com.dominio.exception.ParkingException;
 
+import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
@@ -44,18 +46,23 @@ public class ParkingAPI {
 	
 	@CrossOrigin(origins = "http://localhost:4200")	
 	@RequestMapping(path = "/vehiculos-parqueados", method = GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<RegistroDeIngreso> consultarVehiculosParqueados() {
+	public ResponseEntity< List<RegistroDeIngreso> > consultarVehiculosParqueados() {
 		
-		return parkingServices.obtenerVehiculosParqueados(); 
+		return new ResponseEntity<>(parkingServices.obtenerVehiculosParqueados(), HttpStatus.ACCEPTED);
+		
 	}
 	
 	@CrossOrigin(origins = "http://localhost:4200")
-	@RequestMapping(path = "/registrar-ingresos", method = POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(path = "/registrar-ingresos", method = POST)
 	public ResponseEntity < String > registrarIngresoVehiculo(@RequestBody Vehiculo vehiculo) {
 		
+		try {
 			celadorParqueadero.atenderSolicitudDeIngreso(vehiculo, LocalDateTime.now());			
-			
-			return ResponseEntity.status(HttpStatus.CREATED).build();
+		} catch (ParkingException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+		}
+		
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	
 	@CrossOrigin(origins = "http://localhost:4200")
@@ -64,6 +71,7 @@ public class ParkingAPI {
 		
 			return celadorParqueadero.atenderSalidaDelVehiculo(placa, LocalDateTime.now());		
 	}
+	
 	
 	
 	

@@ -1,0 +1,9 @@
+<h1 mat-dialog-title>Generar tikect de pago</h1>
+<div mat-dialog-content>
+  <h1 align="center" mat-dialog-title>{{data.placa}}</h1>  
+  <p>{{data.tipoDeVehiculo}} - {{data.cilindraje}} CC</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button>
+</div>
