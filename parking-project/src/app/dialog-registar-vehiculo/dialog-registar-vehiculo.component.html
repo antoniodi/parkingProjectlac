@@ -3,7 +3,7 @@
 
   <mat-form-field class="input-registro">
     <input class="input-uppercase" [(ngModel)]="placa" required matInput #inputplaca maxlength="10" placeholder="Ingrese la placa del vehiculo" [formControl]="placaFormControl" >    
-    <mat-hint align="end">{{inputplaca.value.length}} / 10</mat-hint>
+    <mat-hint align="end">{{inputplaca.value?.length || 0}} / 10</mat-hint>
     <mat-error *ngIf="placaFormControl.hasError('required')">
       La placa es <strong>requerida</strong>
     </mat-error>
@@ -21,14 +21,13 @@
   </mat-form-field>
   
   <mat-form-field  class="input-registro">
-    <input [(ngModel)]="cilindraje" required matInput #inputcilindraje maxlength="4" min="10" max="9999" type="number" placeholder="Cilindraje" [formControl]="cilindrajeFormControl">      
-    <mat-hint align="end">{{inputcilindraje.value.length}} / 4</mat-hint>
+    <input [(ngModel)]="cilindraje" #inputcilindraje required matInput type="number" max="9999" placeholder="Cilindraje" [formControl]="cilindrajeFormControl">
     <span matSuffix>CC</span>
     <mat-error *ngIf="cilindrajeFormControl.hasError('required')">
         El cilindraje es <strong>requerido</strong>
     </mat-error>
   </mat-form-field>
-
+  
 </form>
 
 <div class="dialog-button" mat-dialog-actions>

@@ -18,7 +18,6 @@ import com.dao.services.ParkingServicesImpl;
 import com.dominio.CeladorParqueadero;
 import com.dominio.Parqueadero;
 import com.dominio.RegistroDeIngreso;
-import com.dominio.Tarifa;
 import com.dominio.TicketDePago;
 import com.dominio.TipoDeVehiculo;
 import com.dominio.Vehiculo;

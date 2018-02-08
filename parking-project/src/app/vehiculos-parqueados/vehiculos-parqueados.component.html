@@ -1,5 +1,5 @@
 <mat-list>
-  <h3 mat-subheader>Vehiculos</h3>
+  <h1 mat-subheader>Vehiculos parqueados</h1>
   <mat-list-item *ngFor = "let data of myData">
     <mat-icon mat-list-icon *ngIf="data.vehiculo.tipoDeVehiculo == 'MOTO'"> motorcycle </mat-icon>
     <mat-icon mat-list-icon *ngIf="data.vehiculo.tipoDeVehiculo == 'CARRO'"> directions_car </mat-icon>
@@ -10,7 +10,8 @@
         <mat-icon class="printshop" align="end" (click)="openRegistrarSalida(data.vehiculo.placa, data.vehiculo.tipoDeVehiculo, data.vehiculo.cilindraje)">local_printshop</mat-icon>
     </button>
   </mat-list-item>
-  <div *ngIf="myData == undefined">
+
+  <div *ngIf="myData == undefined || myData.length == 0">
     <mat-list-item>
       <mat-icon mat-list-icon> warning </mat-icon>
       <h2 mat-line>No se encuentran vehiculos registrados.</h2>
