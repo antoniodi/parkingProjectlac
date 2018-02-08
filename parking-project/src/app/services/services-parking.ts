@@ -22,18 +22,32 @@ export class ServicesParking {
                 .catch(this.handleError);
     }
 
+    public registrarIngresoVehiculo(vehiculo: Vehiculo) {
+      const url = 'http://localhost:8080/registrar-ingresos';
+      return this.http.post(url, vehiculo)
+              .map(response => response.json());
+
+  }
+
     public registrarIngresoVehiculoPromise(vehiculo: Vehiculo) {
         const url = 'http://localhost:8080/registrar-ingresos';
         return this.http.post(url, vehiculo)
-                .toPromise()
-                .then(response => response.text() ? response.json() : response.text())
-                .catch(this.handleError);
+              .toPromise()
+              .then(response => response.text() ? response.json() : response.text())
+              .catch(this.handleError);
     }
 
+    public generarTicketDePago(placa: string) {
+      const url = 'http://localhost:8080/generar-ticket-pago/' + placa;
+      const ticketDePago: any = null;
+      return this.http.put(url, ticketDePago)
+              .map(response => response.json());
+  }
+
     public generarTicketDePagoPromise(placa: string) {
-        const url = '/generar-ticket-pago/' + placa;
+        const url = 'http://localhost:8080/generar-ticket-pago/' + placa;
         const ticketDePago: any = null;
-        return this.http.post(url, ticketDePago)
+        return this.http.put(url, ticketDePago)
                 .toPromise()
                 .then(response => response.text() ? response.json() : response.text())
                 .catch(this.handleError);

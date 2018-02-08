@@ -42,17 +42,22 @@ export class DialogRegistarVehiculoComponent {
     const vehiculo: Vehiculo = {'placa': this.placa,
                                 'tipoDeVehiculo': this.tipoDeVehiculo,
                                 'cilindraje': this.cilindraje};
-    this.servicesParking.registrarIngresoVehiculoPromise(vehiculo)
-       .then(response => this.response = response
-    ).catch(error => {
-      this.openSnackBar(error, 'cerrar');
+    this.servicesParking.registrarIngresoVehiculo(vehiculo)
+      .subscribe(response => this.response = response,
+        error => error._body == null ? this.openSnackBarExito() :  this.openSnackBarError(error._body));
+  }
+
+  openSnackBarError(message: string) {
+    this.snackBar.open(message, 'Error', {
+      duration: 4000,
     });
   }
 
-  openSnackBar(message: string, action: string) {
-    this.snackBar.open(message, action, {
-      duration: 2000,
+  openSnackBarExito() {
+    this.snackBar.open('Operacion exitosa', 'Exito', {
+      duration: 4000,
     });
+    this.dialogRef.close();
   }
 
 }

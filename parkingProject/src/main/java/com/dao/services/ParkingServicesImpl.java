@@ -91,7 +91,7 @@ public class ParkingServicesImpl extends Conexion implements ParkingServices {
 				+ "cilindraje, fecha_ingreso) values (?,?,?,?)") ) {
 			
 				st.setString(1, registroDeIngreso.getVehiculo().getTipoDeVehiculo().toString());
-				st.setString(2, registroDeIngreso.getVehiculo().getPlaca());
+				st.setString(2, registroDeIngreso.getVehiculo().getPlaca().toUpperCase());
 				st.setInt(3, registroDeIngreso.getVehiculo().getCilindraje());
 				st.setTimestamp(4, Timestamp.valueOf(registroDeIngreso.getFechaDeIngreso()));
 				st.executeUpdate();

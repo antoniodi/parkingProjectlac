@@ -12,10 +12,12 @@ import { Vehiculo } from '../dominio/vehiculo';
 })
 export class DialogTicketPagoComponent  {
 
+  response: any;
   placa: string;
   tipoDeVehiculo: string;
   cilindraje: number;
   fechaIngreso: Date;
+  infoTicketDePago = false;
 
   constructor(private servicesParking: ServicesParking, public snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<DialogTicketPagoComponent>,
@@ -25,4 +27,25 @@ export class DialogTicketPagoComponent  {
     this.dialogRef.close();
   }
 
+  generarTicketDePago() {
+
+    this.servicesParking.generarTicketDePago(this.data.placa)
+      .subscribe(response => {this.response = response;
+                              this.infoTicketDePago = true;
+                              this.openSnackBarExito();
+                              },
+        error => error._body == null ? this.openSnackBarExito() :  this.openSnackBarError(error._body));
+  }
+
+  openSnackBarError(message: string) {
+    this.snackBar.open(message, 'Error', {
+      duration: 4000,
+    });
+  }
+
+  openSnackBarExito() {
+    this.snackBar.open('Ticket generado exitosamente', 'Exito', {
+      duration: 4000,
+    });
+  }
 }

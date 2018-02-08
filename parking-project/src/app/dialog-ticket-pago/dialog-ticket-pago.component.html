@@ -1,9 +1,22 @@
 <h1 mat-dialog-title>Generar tikect de pago</h1>
-<div mat-dialog-content>
-  <h1 align="center" mat-dialog-title>{{data.placa}}</h1>  
-  <p>{{data.tipoDeVehiculo}} - {{data.cilindraje}} CC</p>
-</div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">No Thanks</button>
-  <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button>
-</div>
+<form>
+  <div mat-dialog-content>
+    <h1  color="accent" align="center" mat-dialog-title><b>{{data.placa}}</b> </h1>  
+    <p>{{data.tipoDeVehiculo}} </p>
+    <p>{{data.cilindraje}} CC</p>
+  </div>
+
+  <div class="dialog-button" mat-dialog-actions *ngIf="!infoTicketDePago">
+    <button mat-raised-button (click)="onNoClick()" color="warn">Cancelar</button>
+    <button mat-raised-button cdkFocusInitial (click)="generarTicketDePago()" [disabled]='infoTicketDePago' color="primary" >Generar ticket de pago</button>
+  </div>   
+
+  <div *ngIf="infoTicketDePago">
+    <p> {{response.fechaSalida.dayOfMonth}}/{{response.fechaSalida.monthValue}}/{{response.fechaSalida.year}} {{response.fechaSalida.hour}}:{{response.fechaSalida.minute}}:{{response.fechaSalida.second}} </p>        
+    <h1 color="accent"  mat-dialog-title> total: <span matPrefix>$&nbsp;</span> <b>{{response.total}}</b> </h1> 
+    <div class="close-button" > 
+      <button mat-raised-button cdkFocusInitial (click)="onNoClick()" color="primary" >Cerrar</button>
+    </div>
+  </div>
+
+</form>
