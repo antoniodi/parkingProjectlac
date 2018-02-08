@@ -24,6 +24,7 @@ import com.dao.services.ParkingServicesImpl;
 import com.dominio.CeladorParqueadero;
 import com.dominio.Parqueadero;
 import com.dominio.RegistroDeIngreso;
+import com.dominio.TicketDePago;
 import com.dominio.exception.ParkingException;
 
 import junitparams.JUnitParamsRunner;
@@ -72,11 +73,11 @@ public class ParkingServicesTest {
 	public void obtenerVehiculosParqueados(RegistroDeIngreso registroDeIngreso) {
 		// Arrange
 		List<RegistroDeIngreso> registroDeIngresos; 
-		CeladorParqueadero celadorParqueadero = new CeladorParqueadero(parqueadero, parkingServices);
+		CeladorParqueadero celadorParqueadero = new CeladorParqueadero(this.parqueadero, this.parkingServices);
 		celadorParqueadero.atenderSolicitudDeIngreso(registroDeIngreso.getVehiculo(), registroDeIngreso.getFechaDeIngreso()); 
 		
 		// Act
-		registroDeIngresos = parkingServices.obtenerVehiculosParqueados();
+		registroDeIngresos = this.parkingServices.obtenerVehiculosParqueados();
 		
 		// Assert
 		for (RegistroDeIngreso reg : registroDeIngresos) {
@@ -89,7 +90,7 @@ public class ParkingServicesTest {
 	}
 	
 	// Vehiculos con diferente fecha de ingreso y salida
-	private Object[] parametersToTestRegistrarSalidaVehiculoNoParqueado(){
+	private Object[] parametersToTestRegistrarSalidaVehiculo(){
 		return new Object[] {
 			new Object[] {new RegistroDeIngreso(new VehiculoTestDataBuilder().conCilindraje(500).buildVehiculo(),
 												LocalDateTime.of(2018, 1, 29, 10, 0))}
@@ -97,46 +98,20 @@ public class ParkingServicesTest {
 	}
 	
 	@Test
-	@Parameters(method = "parametersToTestRegistrarSalidaVehiculoNoParqueado")
-	public void registrarSalidaVehiculoNoParqueado(RegistroDeIngreso registroDeIngreso) {
+	@Parameters(method = "parametersToTestRegistrarSalidaVehiculo")
+	public void registrarSalidaVehiculo(RegistroDeIngreso registroDeIngreso) {
 		// Arrange
-		ParkingServices parkingServices = mock(ParkingServices.class);
-		CeladorParqueadero celadorParqueadero = new CeladorParqueadero(parqueadero, parkingServices);		
-		
-		when(parkingServices.obtenerRegistroDeIngresoPorPlaca(registroDeIngreso.getVehiculo().getPlaca())).thenReturn(null);		
+		CeladorParqueadero celadorParqueadero = new CeladorParqueadero(this.parqueadero, this.parkingServices);		
+		celadorParqueadero.atenderSolicitudDeIngreso(registroDeIngreso.getVehiculo(), registroDeIngreso.getFechaDeIngreso());
+		TicketDePago ticketDePago = new TicketDePago(registroDeIngreso.getVehiculo(), LocalDateTime.now(), new BigDecimal("2000"));
 		
 		// Act		
-		try {
-			
-			celadorParqueadero.atenderSalidaDelVehiculo(registroDeIngreso.getVehiculo().getPlaca(), LocalDateTime.now());
-			
-		} catch (ParkingException e) {
-			// Assert
-			Assert.assertEquals(CeladorParqueadero.EL_VEHICULO_NO_SE_ENCUENTRA_PARQUEADO, e.getMessage());
-		}		
+		this.parkingServices.registrarSalidaVehiculo(ticketDePago);
+		
+		// Assert 
+		Assert.assertNull(this.parkingServices.obtenerRegistroDeIngresoPorPlaca(registroDeIngreso.getVehiculo().getPlaca())); 
+		
 	}
 	
-	// Vehiculos con diferente fecha de ingreso y salida
-		private Object[] parametersToTestRegistrarSalidaVehiculo(){
-			return new Object[] {
-				new Object[] {new RegistroDeIngreso(new VehiculoTestDataBuilder().conCilindraje(500).buildVehiculo(),
-													LocalDateTime.of(2018, 1, 29, 10, 0))}
-			};
-		}
-		
-		@Test
-		@Parameters(method = "parametersToTestRegistrarSalidaVehiculo")
-		public void registrarSalidaVehiculo(RegistroDeIngreso registroDeIngreso) {
-			// Arrange
-			CeladorParqueadero celadorParqueadero = new CeladorParqueadero(this.parqueadero, this.parkingServices);		
-			celadorParqueadero.atenderSolicitudDeIngreso(registroDeIngreso.getVehiculo(), registroDeIngreso.getFechaDeIngreso());
-			
-			// Act					
-			celadorParqueadero.atenderSalidaDelVehiculo(registroDeIngreso.getVehiculo().getPlaca(), LocalDateTime.now());
-			
-			// Assert 
-			Assert.assertNull(this.parkingServices.obtenerRegistroDeIngresoPorPlaca(registroDeIngreso.getVehiculo().getPlaca())); 
-			
-		}
 	
 }
