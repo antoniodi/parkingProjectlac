@@ -3,10 +3,6 @@
  */
 package dominio.integracion;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -25,7 +21,6 @@ import com.dominio.CeladorParqueadero;
 import com.dominio.Parqueadero;
 import com.dominio.RegistroDeIngreso;
 import com.dominio.TicketDePago;
-import com.dominio.exception.ParkingException;
 
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
