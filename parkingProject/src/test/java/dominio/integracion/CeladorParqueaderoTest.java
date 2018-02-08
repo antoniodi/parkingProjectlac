@@ -205,5 +205,50 @@ public class CeladorParqueaderoTest {
 			Assert.assertEquals(expectedValue, ticketDePago.getTotal());
 								
 		}
+		
+		// Vehiculos con diferente fecha de ingreso y salida
+		private Object[] parametersToTestAtenderSalidaVehiculo(){
+			return new Object[] {
+				new Object[] {new RegistroDeIngreso(new VehiculoTestDataBuilder().conCilindraje(500).buildVehiculo(),
+													LocalDateTime.of(2018, 1, 29, 10, 0)),
+							 LocalDateTime.of(2018, 1, 29, 10, 59),
+							 new BigDecimal("500.00")},
+				new Object[] {new RegistroDeIngreso(new VehiculoTestDataBuilder().conCilindraje(500).buildVehiculo(),
+											    	LocalDateTime.of(2018, 1, 29, 10, 0)),
+							 LocalDateTime.of(2018, 1, 29, 11, 1),
+							 new BigDecimal("1000.00")},
+				new Object[] {new RegistroDeIngreso(new VehiculoTestDataBuilder().conCilindraje(650).buildVehiculo(),
+							  						LocalDateTime.of(2018, 1, 29, 10, 0)),
+							 LocalDateTime.of(2018, 1, 29, 20, 59),
+							 new BigDecimal("6000.00")},
+				new Object[] {new RegistroDeIngreso(new VehiculoTestDataBuilder().conCilindraje(501).buildVehiculo(),
+													LocalDateTime.of(2018, 1, 29, 10, 0)),
+							 LocalDateTime.of(2018, 1, 29, 11, 1),
+							 new BigDecimal("3000.00")},
+				new Object[] {new RegistroDeIngreso(new VehiculoTestDataBuilder().conTipoDeVehiculo(TipoDeVehiculo.CARRO).conCilindraje(500).buildVehiculo(),
+							  						LocalDateTime.of(2018, 1, 25, 10, 0)),
+						     LocalDateTime.of(2018, 1, 26, 12, 59),
+						     new BigDecimal("11000.00")},
+				new Object[] {new RegistroDeIngreso(new VehiculoTestDataBuilder().conTipoDeVehiculo(TipoDeVehiculo.CARRO).conCilindraje(501).buildVehiculo(),
+													LocalDateTime.of(2018, 1, 25, 10, 0)),
+							 LocalDateTime.of(2018, 1, 25, 11, 1),
+							 new BigDecimal("2000.00")}
+			};
+		}
+
+		@Test
+		@Parameters(method = "parametersToTestAtenderSalidaVehiculo")
+		public void atenderSalidaVehiculo(RegistroDeIngreso registroDeIngreso, LocalDateTime fechaSalida, BigDecimal expectedValue) {
+			
+			// Arrange		
+			CeladorParqueadero celadorParqueadero = new CeladorParqueadero(parqueadero, parkingServices);			
+					
+			// Act
+			TicketDePago ticketDePago = celadorParqueadero.generarTicketDePago(registroDeIngreso, fechaSalida);
+			
+			// Assert
+			Assert.assertEquals(expectedValue, ticketDePago.getTotal());
+								
+		}
 
 }

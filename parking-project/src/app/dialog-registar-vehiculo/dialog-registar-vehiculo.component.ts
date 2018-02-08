@@ -23,7 +23,7 @@ export class DialogRegistarVehiculoComponent {
   ]);
 
   cilindrajeFormControl = new FormControl('', [
-    Validators.required,
+    Validators.required, Validators.min(50), Validators.max(9999),
   ]);
 
   tipoDeVehiculoFormControl = new FormControl('', [

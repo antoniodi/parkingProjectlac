@@ -21,10 +21,13 @@
   </mat-form-field>
   
   <mat-form-field  class="input-registro">
-    <input [(ngModel)]="cilindraje" #inputcilindraje required matInput type="number" max="9999" placeholder="Cilindraje" [formControl]="cilindrajeFormControl">
+    <input [(ngModel)]="cilindraje" #inputcilindraje required matInput type="number" min="50" max="9999" placeholder="Cilindraje" [formControl]="cilindrajeFormControl">
     <span matSuffix>CC</span>
     <mat-error *ngIf="cilindrajeFormControl.hasError('required')">
         El cilindraje es <strong>requerido</strong>
+    </mat-error>
+    <mat-error *ngIf="cilindrajeFormControl.hasError('min') || cilindrajeFormControl.hasError('max')">
+        Por favor ingrese un cilindraje entre <strong>50</strong> y <strong>9999</strong>
     </mat-error>
   </mat-form-field>
   
