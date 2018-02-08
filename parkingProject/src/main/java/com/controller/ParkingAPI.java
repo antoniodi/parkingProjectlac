@@ -69,29 +69,12 @@ public class ParkingAPI {
 	@RequestMapping(path = "/generar-ticket-pago/{placa}", method = PUT, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<TicketDePago> registrarSalidaVehiculo(@PathVariable(value="placa", required=true) String placa) {				
 			
+		try {
 			return new ResponseEntity<>(celadorParqueadero.atenderSalidaDelVehiculo(placa, LocalDateTime.now()), HttpStatus.ACCEPTED);
-	}
-	
-	
-	
-	
-	
-	@RequestMapping(path = "/tarifa", method = GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public Tarifa consultarTarifa() {
-		
-		return parkingServices.obtenerTrarifaPorTipoDeVehiculo(TipoDeVehiculo.CARRO); 
-	}
-	
-	@RequestMapping(path = "/vehiculo-por-placa", method = GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public RegistroDeIngreso consultarVehiculoPorPlaca() {
-		
-		return parkingServices.obtenerRegistroDeIngresoPorPlaca("LIV-778"); 
-	}
-	
-	@RequestMapping(path = "/numero-de-vehiculos-parqueados", method = GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public int consultarNumeroDeCupos() {
-		
-		return parkingServices.obtenerNumeroVehiculosParqueados(TipoDeVehiculo.CARRO); 
+		} catch (ParkingException e) {
+			return new ResponseEntity<>(celadorParqueadero.atenderSalidaDelVehiculo(placa, LocalDateTime.now()), HttpStatus.CONFLICT);
+		}
+			
 	}
 
 }

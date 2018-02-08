@@ -1,7 +1,8 @@
 <mat-list>
   <h3 mat-subheader>Vehiculos</h3>
   <mat-list-item *ngFor = "let data of myData">
-    <mat-icon mat-list-icon> motorcycle </mat-icon>
+    <mat-icon mat-list-icon *ngIf="data.vehiculo.tipoDeVehiculo == 'MOTO'"> motorcycle </mat-icon>
+    <mat-icon mat-list-icon *ngIf="data.vehiculo.tipoDeVehiculo == 'CARRO'"> directions_car </mat-icon>
     <h4 mat-line>{{data.vehiculo.placa}}</h4>
     <p mat-line> {{data.fechaDeIngreso.dayOfMonth}}/{{data.fechaDeIngreso.monthValue}}/{{data.fechaDeIngreso.year}} {{data.fechaDeIngreso.hour}}:{{data.fechaDeIngreso.minute}}:{{data.fechaDeIngreso.second}} </p>
     <p mat-line> {{data.vehiculo.cilindraje}} CC</p>
@@ -9,6 +10,12 @@
         <mat-icon class="printshop" align="end" (click)="openRegistrarSalida(data.vehiculo.placa, data.vehiculo.tipoDeVehiculo, data.vehiculo.cilindraje)">local_printshop</mat-icon>
     </button>
   </mat-list-item>
+  <div *ngIf="myData == undefined">
+    <mat-list-item>
+      <mat-icon mat-list-icon> warning </mat-icon>
+      <h2 mat-line>No se encuentran vehiculos registrados.</h2>
+    </mat-list-item>
+  </div>
 </mat-list>
 
 <button class="agregar-vehiculo" (click)="openRegistrarIngreso()" mat-fab color="primary">

@@ -34,7 +34,7 @@ export class DialogTicketPagoComponent  {
                               this.infoTicketDePago = true;
                               this.openSnackBarExito();
                               },
-        error => error._body == null ? this.openSnackBarExito() :  this.openSnackBarError(error._body));
+        error => error._body == null ? this.openSnackBarExito() :  this.openSnackBarError(JSON.parse(error._body).message) );
   }
 
   openSnackBarError(message: string) {
