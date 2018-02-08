@@ -12,13 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dao.services.ParkingServices;
 import com.dominio.CeladorParqueadero;
 import com.dominio.RegistroDeIngreso;
-import com.dominio.Tarifa;
 import com.dominio.TicketDePago;
-import com.dominio.TipoDeVehiculo;
 import com.dominio.Vehiculo;
 import com.dominio.exception.ParkingException;
 
-import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
