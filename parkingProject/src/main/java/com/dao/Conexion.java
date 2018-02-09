@@ -25,7 +25,7 @@ public class Conexion {
 	private static final String USER = "root";
 	private static final String PASS= "root";
 	
-	public void conectar() {
+	public synchronized void conectar() {
 		
 		try {
 			this.dBConexion = DriverManager.getConnection(BD_URL, USER, PASS);
