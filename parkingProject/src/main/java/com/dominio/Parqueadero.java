@@ -53,7 +53,7 @@ public class Parqueadero {
 	 * @param vehiculo
 	 * @return valorRecargo
 	 */
-	public BigDecimal obtenerRecargos(Vehiculo vehiculo) {
+	public BigDecimal obtenerRecargo(Vehiculo vehiculo) {
 		
 		final BigDecimal VALOR_RECARGO_MOTOS_ALTO_CILINDRAJE = new BigDecimal(2000);
 		final int MOTOS_BAJO_CILINDRAJE_HASTA = 500; 

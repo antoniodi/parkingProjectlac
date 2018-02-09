@@ -305,7 +305,7 @@ public class CeladorParqueaderoTest {
 		Parqueadero parqueadero = mock(Parqueadero.class);
 		ParkingServices parkingServices = mock(ParkingServices.class);
 		
-		when(parqueadero.obtenerRecargos(registroDeIngreso.getVehiculo())).thenReturn(recargo);
+		when(parqueadero.obtenerRecargo(registroDeIngreso.getVehiculo())).thenReturn(recargo);
 		when(parkingServices.obtenerTrarifaPorTipoDeVehiculo(registroDeIngreso.getVehiculo().getTipoDeVehiculo())).
 				thenReturn(tarifa);			
 				

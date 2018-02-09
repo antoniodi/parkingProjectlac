@@ -160,7 +160,7 @@ public class ParqueaderoTest {
 			BigDecimal valorRecargo;
 			
 			// Act		
-			valorRecargo = parqueadero.obtenerRecargos(vehiculo);			
+			valorRecargo = parqueadero.obtenerRecargo(vehiculo);			
 				
 			// Assert
 			assertEquals(expectedValue, valorRecargo);					

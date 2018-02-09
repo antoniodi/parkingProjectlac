@@ -101,7 +101,7 @@ public class CeladorParqueadero {
 		
 		total = total.add(tarifa.getValorDia().multiply(new BigDecimal(numeroDeDiasDeParqueo))).
 				add(tarifa.getValorHora().multiply(new BigDecimal(numeroDeHorasDeParqueo))).
-				add(this.parqueadero.obtenerRecargos(registroDeIngreso.getVehiculo()));		
+				add(this.parqueadero.obtenerRecargo(registroDeIngreso.getVehiculo()));		
 		
 		return new TicketDePago(registroDeIngreso.getVehiculo(), 
 								fechaSalida,
