@@ -3,7 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { FormControl, Validators } from '@angular/forms';
 import { ServicesParking } from '../services/services-parking';
 import { Vehiculo } from '../dominio/vehiculo';
-
+const EMAIL_REGEX = /^([a-zA-Z0-9]{1,4}-[a-zA-Z0-9]{1,4})/;
 @Component({
   selector: 'app-dialog-registar-vehiculo',
   templateUrl: './dialog-registar-vehiculo.component.html',
@@ -20,6 +20,7 @@ export class DialogRegistarVehiculoComponent {
 
   placaFormControl = new FormControl('', [
     Validators.required,
+    Validators.pattern(EMAIL_REGEX)
   ]);
 
   cilindrajeFormControl = new FormControl('', [

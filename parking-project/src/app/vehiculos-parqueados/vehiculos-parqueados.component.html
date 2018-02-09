@@ -1,5 +1,13 @@
 <mat-list class="list-vehiculos">
-  <h1 mat-subheader>Vehiculos parqueados</h1>
+  <div class="cabecera">
+    <h1 mat-subheader>Vehiculos parqueados</h1>
+ <!--   <form >
+      <mat-form-field>
+        <input class="input-filtrar" #inputflitrar matInput placeholder="Filtrar placa">
+      </mat-form-field>
+    </form>
+    <p>{{inputflitrar.value.toUpperCase() }}</p> -->
+  </div>
   <div >
     <mat-list-item *ngFor = "let data of myData">
       <mat-icon mat-list-icon *ngIf="data.vehiculo.tipoDeVehiculo == 'MOTO'"> motorcycle </mat-icon>
@@ -24,3 +32,4 @@
 <button class="agregar-vehiculo" (click)="openRegistrarIngreso()" mat-fab color="primary">
   <mat-icon>add</mat-icon>
 </button>
+

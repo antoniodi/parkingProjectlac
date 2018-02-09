@@ -2,10 +2,13 @@
 <form>
 
   <mat-form-field class="input-registro">
-    <input class="input-uppercase" [(ngModel)]="placa" required matInput #inputplaca maxlength="10" placeholder="Ingrese la placa del vehiculo" [formControl]="placaFormControl" >    
-    <mat-hint align="end">{{inputplaca.value?.length || 0}} / 10</mat-hint>
+    <input class="input-uppercase" [(ngModel)]="placa" required matInput #inputplaca maxlength="9" placeholder="Ingrese la placa del vehiculo" [formControl]="placaFormControl" >    
+    <mat-hint align="end">{{inputplaca.value?.length || 0}} / 9</mat-hint>
     <mat-error *ngIf="placaFormControl.hasError('required')">
       La placa es <strong>requerida</strong>
+    </mat-error>
+    <mat-error *ngIf="placaFormControl.hasError('pattern')">
+      Por favor ingrese una placa con el formato <b>AAAA-1234</b>
     </mat-error>
   </mat-form-field>
 
