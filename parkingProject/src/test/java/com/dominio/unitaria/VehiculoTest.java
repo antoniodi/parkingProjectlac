@@ -1,7 +1,7 @@
 /**
  * 
  */
-package dominio.unitaria;
+package com.dominio.unitaria;
 
 import static org.junit.Assert.assertEquals;
 
@@ -9,8 +9,7 @@ import org.junit.Test;
 
 import com.dominio.TipoDeVehiculo;
 import com.dominio.Vehiculo;
-
-import testdatabuilder.VehiculoTestDataBuilder;
+import com.dominio.testdatabuilder.VehiculoTestDataBuilder;
 
 /**
  * @author luis.cortes

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package testdatabuilder;
+package com.dominio.testdatabuilder;
 
 import com.dominio.TipoDeVehiculo;
 import com.dominio.Vehiculo;

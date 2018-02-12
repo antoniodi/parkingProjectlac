@@ -1,7 +1,7 @@
 /**
  * 
  */
-package dominio.unitaria;
+package com.dominio.unitaria;
 
 import static org.junit.Assert.*;
 
@@ -16,10 +16,10 @@ import com.dominio.Parqueadero;
 import com.dominio.TipoDeVehiculo;
 import com.dominio.Vehiculo;
 import com.dominio.exception.ParkingException;
+import com.dominio.testdatabuilder.VehiculoTestDataBuilder;
 
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
-import testdatabuilder.VehiculoTestDataBuilder;
 
 
 /**

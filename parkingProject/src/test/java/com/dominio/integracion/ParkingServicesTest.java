@@ -1,7 +1,7 @@
 /**
  * 
  */
-package dominio.integracion;
+package com.dominio.integracion;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -21,10 +21,10 @@ import com.dominio.CeladorParqueadero;
 import com.dominio.Parqueadero;
 import com.dominio.RegistroDeIngreso;
 import com.dominio.TicketDePago;
+import com.dominio.testdatabuilder.VehiculoTestDataBuilder;
 
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
-import testdatabuilder.VehiculoTestDataBuilder;
 
 /**
  * @author luis.cortes

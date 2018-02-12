@@ -1,4 +1,4 @@
-package dominio.integracion;
+package com.dominio.integracion;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
@@ -24,10 +24,10 @@ import com.dominio.TicketDePago;
 import com.dominio.TipoDeVehiculo;
 import com.dominio.Vehiculo;
 import com.dominio.exception.ParkingException;
+import com.dominio.testdatabuilder.VehiculoTestDataBuilder;
 
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
-import testdatabuilder.VehiculoTestDataBuilder;
 
 @RunWith(JUnitParamsRunner.class)
 public class CeladorParqueaderoTest {
