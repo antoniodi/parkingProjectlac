@@ -3,6 +3,8 @@
  */
 package com.dominio.integracion;
 
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -19,6 +21,7 @@ import com.dao.DAOHistoricoDeParqueoImpl;
 import com.dao.interfaces.DAOHistoricoDeParqueo;
 import com.dao.services.ParkingServices;
 import com.dominio.CeladorParqueadero;
+import com.dominio.RegistroDeIngreso;
 import com.dominio.TicketDePago;
 import com.dominio.Vehiculo;
 import com.dominio.exception.ParkingException;
@@ -54,6 +57,19 @@ public class ParkingAPITest {
 	@Autowired
 	ParkingServices parkingServices;
 	
+
+	@Test
+	public void obtenerVehiculosParqueadosAPI() {
+		
+		// Arrange
+		ResponseEntity< List<RegistroDeIngreso> > responseExp = new ResponseEntity<>(null,HttpStatus.ACCEPTED);
+		
+		// Act
+		ResponseEntity< List<RegistroDeIngreso> > response = parkingApi.consultarVehiculosParqueados();
+		
+		// Assert
+		Assert.assertEquals(responseExp.getStatusCode(), response.getStatusCode());
+	}
 	
 	@Test
 	public void registrarIngresoVehiculoNoParqueadoAPI() {
