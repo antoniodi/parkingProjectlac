@@ -11,7 +11,6 @@ import java.sql.SQLException;
 import org.apache.log4j.Logger;
 
 import com.dao.exception.DAOException;
-import com.dao.services.ParkingServicesImpl;
 
 /**
  * @author luis.cortes
