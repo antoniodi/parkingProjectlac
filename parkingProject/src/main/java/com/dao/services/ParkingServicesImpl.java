@@ -7,7 +7,6 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.dao.Conexion;
@@ -20,8 +19,7 @@ import com.dominio.Vehiculo;
 
 @Service
 public class ParkingServicesImpl extends Conexion implements ParkingServices {
-	
-	static Logger log = Logger.getLogger(ParkingServicesImpl.class.getName());
+		
 	private static final String VEHICULO_ESTA_EN_EL_PARQUEDERO = "S";
 	private static final String VEHICULO_NO_ESTA_EN_EL_PARQUEDERO = "N";
 
@@ -49,14 +47,8 @@ public class ParkingServicesImpl extends Conexion implements ParkingServices {
 		} catch (SQLException e) {
 			throw new DAOException(e.getMessage());
 		} finally {
-			try {
-				if( resultado != null ) {
-					resultado.close();
-				}
-			} catch (SQLException e) {
-				
-				log.debug(e.getMessage());				
-			}
+			
+			this.cerrarResultSet(resultado);
 			this.cerrarConexion();
 		}
 	}
@@ -87,14 +79,8 @@ public class ParkingServicesImpl extends Conexion implements ParkingServices {
 		} catch (SQLException e) {
 			throw new DAOException(e.getMessage());
 		} finally {
-			try {
-				if( resultado != null ) {
-					resultado.close();
-				}
-			} catch (SQLException e) {
-				
-				log.debug(e.getMessage());				
-			}
+			
+			this.cerrarResultSet(resultado);
 			this.cerrarConexion();
 		}
 		
@@ -147,14 +133,8 @@ public class ParkingServicesImpl extends Conexion implements ParkingServices {
 		} catch (SQLException e) {
 			throw new DAOException(e.getMessage());
 		} finally {
-			try {
-				if( resultado != null ) {
-					resultado.close();
-				}
-			} catch (SQLException e) {
-				
-				log.debug(e.getMessage());				
-			}
+			
+			this.cerrarResultSet(resultado);
 			this.cerrarConexion();
 		}
 	
@@ -184,14 +164,8 @@ public class ParkingServicesImpl extends Conexion implements ParkingServices {
 		} catch (SQLException e) {
 			throw new DAOException(e.getMessage());
 		} finally {
-			try {
-				if( resultado != null ) {
-					resultado.close();
-				}
-			} catch (SQLException e) {
-				
-				log.debug(e.getMessage());				
-			}
+
+			this.cerrarResultSet(resultado);
 			this.cerrarConexion();
 		}
 	}

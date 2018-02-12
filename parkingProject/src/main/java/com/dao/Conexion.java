@@ -5,9 +5,13 @@ package com.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.apache.log4j.Logger;
+
 import com.dao.exception.DAOException;
+import com.dao.services.ParkingServicesImpl;
 
 /**
  * @author luis.cortes
@@ -16,6 +20,8 @@ import com.dao.exception.DAOException;
 public class Conexion {
 	
 	protected Connection dBConexion;
+	
+	static Logger log = Logger.getLogger(ParkingServicesImpl.class.getName());
 	
 	// JDBC driver nombre y base de datos URL
 	private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver"; 
@@ -45,6 +51,16 @@ public class Conexion {
 			throw new DAOException(e.getMessage());
 		}
 		
+	}
+	
+	protected void cerrarResultSet(ResultSet resultSet) {
+		if( resultSet != null ) {
+			try {
+				resultSet.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 }
