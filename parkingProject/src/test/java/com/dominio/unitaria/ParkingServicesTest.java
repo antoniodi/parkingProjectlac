@@ -4,26 +4,26 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 
 import java.math.BigDecimal;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 
 import org.junit.Test;
-import org.mockito.Mockito;
 
 import com.dao.exception.DAOException;
 import com.dao.services.ParkingServices;
+import com.dao.services.ParkingServicesImpl;
 import com.dominio.RegistroDeIngreso;
 import com.dominio.TicketDePago;
-import com.dominio.TipoDeVehiculo;
 import com.dominio.Vehiculo;
 import com.dominio.testdatabuilder.VehiculoTestDataBuilder;
 
 public class ParkingServicesTest {
 
 	@Test(expected = DAOException.class)
-	public void obtenerNumeroVehiculosParqueados() {
+	public void obtenerNumeroVehiculosParqueados() throws SQLException {
 		
 		// Arrange
-		ParkingServices parkingServices = mock(ParkingServices.class);
+		ParkingServices parkingServices = mock(ParkingServicesImpl.class);
 		Vehiculo vehiculo = new VehiculoTestDataBuilder().buildVehiculo();
 		
 		// Act
@@ -38,7 +38,7 @@ public class ParkingServicesTest {
 	public void obtenerRegistroDeIngresoPorPlaca() {
 		
 		// Arrange
-		ParkingServices parkingServices = mock(ParkingServices.class);
+		ParkingServices parkingServices = mock(ParkingServicesImpl.class);
 		Vehiculo vehiculo = new VehiculoTestDataBuilder().buildVehiculo();
 		
 		// Act
@@ -53,7 +53,7 @@ public class ParkingServicesTest {
 	public void obtenerTrarifaPorTipoDeVehiculo() {
 		
 		// Arrange
-		ParkingServices parkingServices = mock(ParkingServices.class);
+		ParkingServices parkingServices = mock(ParkingServicesImpl.class);
 		Vehiculo vehiculo = new VehiculoTestDataBuilder().buildVehiculo();
 		
 		// Act
@@ -68,7 +68,7 @@ public class ParkingServicesTest {
 	public void obtenerVehiculosParqueados() {
 		
 		// Arrange
-		ParkingServices parkingServices = mock(ParkingServices.class);
+		ParkingServices parkingServices = mock(ParkingServicesImpl.class);
 		
 		// Act
 		doThrow(new DAOException("Error")).when(parkingServices).obtenerVehiculosParqueados();
@@ -82,7 +82,7 @@ public class ParkingServicesTest {
 	public void registrarIngresoVehiculo() {
 		
 		// Arrange
-		ParkingServices parkingServices = mock(ParkingServices.class);
+		ParkingServices parkingServices = mock(ParkingServicesImpl.class);
 		RegistroDeIngreso registroDeIngreso = new RegistroDeIngreso(new VehiculoTestDataBuilder().buildVehiculo(), 
 																	LocalDateTime.now());
 		
@@ -98,7 +98,7 @@ public class ParkingServicesTest {
 	public void registrarSalidaVehiculo() {
 		
 		// Arrange
-		ParkingServices parkingServices = mock(ParkingServices.class);
+		ParkingServices parkingServices = mock(ParkingServicesImpl.class);
 		TicketDePago ticketDePago = new TicketDePago(new VehiculoTestDataBuilder().buildVehiculo(), 
 													 LocalDateTime.now(), 
 													 new BigDecimal("1000"));

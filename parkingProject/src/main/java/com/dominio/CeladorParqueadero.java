@@ -1,6 +1,4 @@
-/**
- * 
- */
+
 package com.dominio;
 
 import java.math.BigDecimal;

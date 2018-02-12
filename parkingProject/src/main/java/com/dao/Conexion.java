@@ -61,5 +61,21 @@ public class Conexion {
 			}
 		}
 	}
+
+	/**
+	 * @param dBConexion the dBConexion to set
+	 */
+	public void setdBConexion(Connection dBConexion) {
+		this.dBConexion = dBConexion;
+	}
+
+	/**
+	 * @return the dBConexion
+	 */
+	public Connection getdBConexion() {
+		return dBConexion;
+	}
+	
+	
 	
 }
