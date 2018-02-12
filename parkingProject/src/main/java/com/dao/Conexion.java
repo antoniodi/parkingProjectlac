@@ -58,7 +58,7 @@ public class Conexion {
 			try {
 				resultSet.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				log.debug(e.getMessage());
 			}
 		}
 	}
