@@ -69,7 +69,7 @@ public class ParkingAPI {
 		try {
 			return new ResponseEntity<>(celadorParqueadero.atenderSalidaDelVehiculo(placa, LocalDateTime.now()), HttpStatus.ACCEPTED);
 		} catch (ParkingException e) {
-			return new ResponseEntity<>(celadorParqueadero.atenderSalidaDelVehiculo(placa, LocalDateTime.now()), HttpStatus.CONFLICT);
+			return new ResponseEntity<>(null, HttpStatus.CONFLICT);
 		}
 			
 	}

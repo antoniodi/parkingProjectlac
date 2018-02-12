@@ -92,16 +92,12 @@ public class ParkingAPITest {
 		Vehiculo vehiculo = new VehiculoTestDataBuilder().conCilindraje(501).buildVehiculo();
 		ResponseEntity<String> responseExp = new ResponseEntity<String>("",HttpStatus.CONFLICT);
 		
+		// Act
+		ResponseEntity < TicketDePago > response = parkingApi.registrarSalidaVehiculo(vehiculo.getPlaca());	
 		
-		try {
-			// Act
-			ResponseEntity < TicketDePago > response = parkingApi.registrarSalidaVehiculo(vehiculo.getPlaca());
-		} catch (ParkingException e) {
-			
-			// Assert			
-			Assert.assertEquals(CeladorParqueadero.EL_VEHICULO_NO_SE_ENCUENTRA_PARQUEADO, e.getMessage());
-//			Assert.assertEquals(responseExp.getStatusCode(), response.getStatusCode());
-		}
+		// Assert			
+		Assert.assertEquals(responseExp.getStatusCode(), response.getStatusCode());
+
 	}
 	
 	@Test

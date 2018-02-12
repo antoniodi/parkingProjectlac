@@ -46,7 +46,7 @@ public class CeladorParqueadero {
 	 */
 	public void atenderSolicitudDeIngreso(Vehiculo vehiculo, LocalDateTime fechaIngreso) {
 		
-		if (vehiculo.getPlaca() == null || vehiculo.getCilindraje() == 0 || vehiculo.getTipoDeVehiculo() == null) {
+		if (vehiculo.getPlaca() == null || vehiculo.getCilindraje() <= 0 || vehiculo.getTipoDeVehiculo() == null) {
 			throw new ParkingException(LOS_DATOS_DEL_VEHICULOS_ESTAN_INCOMPLETOS);
 		}
 		

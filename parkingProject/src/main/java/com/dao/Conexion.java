@@ -21,7 +21,7 @@ public class Conexion {
 	
 	protected Connection dBConexion;
 	
-	static Logger log = Logger.getLogger(ParkingServicesImpl.class.getName());
+	static Logger log = Logger.getLogger(Conexion.class.getName());
 	
 	// JDBC driver nombre y base de datos URL
 	private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver"; 
