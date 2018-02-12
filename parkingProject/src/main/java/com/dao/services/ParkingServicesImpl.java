@@ -7,6 +7,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.dao.Conexion;
@@ -20,13 +21,14 @@ import com.dominio.Vehiculo;
 @Service
 public class ParkingServicesImpl extends Conexion implements ParkingServices {
 	
+	static Logger log = Logger.getLogger(ParkingServicesImpl.class.getName());
 	private static final String VEHICULO_ESTA_EN_EL_PARQUEDERO = "S";
 	private static final String VEHICULO_NO_ESTA_EN_EL_PARQUEDERO = "N";
 
 	@Override
 	public int obtenerNumeroVehiculosParqueados(TipoDeVehiculo tipoDeVehiculo) {
 		
-		ResultSet resultado;
+		ResultSet resultado = null;
 		int numeroVehiculosParqueados = 0;
 		
 		this.conectar(); 
@@ -47,6 +49,14 @@ public class ParkingServicesImpl extends Conexion implements ParkingServices {
 		} catch (SQLException e) {
 			throw new DAOException(e.getMessage());
 		} finally {
+			try {
+				if( resultado != null ) {
+					resultado.close();
+				}
+			} catch (SQLException e) {
+				
+				log.debug(e.getMessage());				
+			}
 			this.cerrarConexion();
 		}
 	}
@@ -54,7 +64,7 @@ public class ParkingServicesImpl extends Conexion implements ParkingServices {
 	@Override
 	public List<RegistroDeIngreso> obtenerVehiculosParqueados() {
 		
-		ResultSet resultado;
+		ResultSet resultado = null;
 		ArrayList<RegistroDeIngreso> registroDeIngresos = new ArrayList<>();
 		
 		this.conectar();
@@ -77,6 +87,14 @@ public class ParkingServicesImpl extends Conexion implements ParkingServices {
 		} catch (SQLException e) {
 			throw new DAOException(e.getMessage());
 		} finally {
+			try {
+				if( resultado != null ) {
+					resultado.close();
+				}
+			} catch (SQLException e) {
+				
+				log.debug(e.getMessage());				
+			}
 			this.cerrarConexion();
 		}
 		
@@ -107,7 +125,7 @@ public class ParkingServicesImpl extends Conexion implements ParkingServices {
 	@Override
 	public RegistroDeIngreso obtenerRegistroDeIngresoPorPlaca(String placa) {
 		
-		ResultSet resultado;
+		ResultSet resultado = null;
 		RegistroDeIngreso registroDeIngreso = null;
 		
 		this.conectar();
@@ -129,6 +147,14 @@ public class ParkingServicesImpl extends Conexion implements ParkingServices {
 		} catch (SQLException e) {
 			throw new DAOException(e.getMessage());
 		} finally {
+			try {
+				if( resultado != null ) {
+					resultado.close();
+				}
+			} catch (SQLException e) {
+				
+				log.debug(e.getMessage());				
+			}
 			this.cerrarConexion();
 		}
 	
@@ -137,7 +163,7 @@ public class ParkingServicesImpl extends Conexion implements ParkingServices {
 	@Override
 	public Tarifa obtenerTrarifaPorTipoDeVehiculo(TipoDeVehiculo tipoDeVehiculo) {
 		
-		ResultSet resultado;
+		ResultSet resultado = null;
 		Tarifa tarifa = null;
 		
 		this.conectar();
@@ -158,6 +184,14 @@ public class ParkingServicesImpl extends Conexion implements ParkingServices {
 		} catch (SQLException e) {
 			throw new DAOException(e.getMessage());
 		} finally {
+			try {
+				if( resultado != null ) {
+					resultado.close();
+				}
+			} catch (SQLException e) {
+				
+				log.debug(e.getMessage());				
+			}
 			this.cerrarConexion();
 		}
 	}

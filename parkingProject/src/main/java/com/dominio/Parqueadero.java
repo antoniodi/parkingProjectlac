@@ -25,6 +25,9 @@ public class Parqueadero {
 	private static final int CUPO_CARRO = 20;
 	private static final int CUPO_MOTO = 10;	
 	
+	private static final BigDecimal VALOR_RECARGO_MOTOS_ALTO_CILINDRAJE = new BigDecimal(2000);
+	private static final int MOTOS_BAJO_CILINDRAJE_HASTA = 500;
+	
 	public void validarAutorizacion(String placa, LocalDateTime fechaIngreso) {
 		
 		if ((placa.toUpperCase().charAt(0) == 'A') && 
@@ -53,10 +56,7 @@ public class Parqueadero {
 	 * @param vehiculo
 	 * @return valorRecargo
 	 */
-	public BigDecimal obtenerRecargo(Vehiculo vehiculo) {
-		
-		final BigDecimal VALOR_RECARGO_MOTOS_ALTO_CILINDRAJE = new BigDecimal(2000);
-		final int MOTOS_BAJO_CILINDRAJE_HASTA = 500; 
+	public BigDecimal obtenerRecargo(Vehiculo vehiculo) { 
 		
 		BigDecimal recargo = new BigDecimal(0);
 		
